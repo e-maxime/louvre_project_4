@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Form
  *
- * @ORM\Table(name="form")
- * @ORM\Entity(repositoryClass="Project\BookingBundle\Repository\FormRepository")
+ * @ORM\Table(name="ticket")
+ * @ORM\Entity(repositoryClass="Project\BookingBundle\Repository\TicketRepository")
  */
-class Form
+class Ticket
 {
     /**
      * @var int
@@ -69,13 +69,6 @@ class Form
      * @ORM\Column(name="typeOfTicket", type="string", length=255)
      */
     private $typeOfTicket;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="nbTickets", type="integer")
-     */
-    private $nbTickets;
 
     /**
      * @var boolean
@@ -261,30 +254,6 @@ class Form
     public function getTypeOfTicket()
     {
         return $this->typeOfTicket;
-    }
-
-    /**
-     * Set nbTickets
-     *
-     * @param integer $nbTickets
-     *
-     * @return Form
-     */
-    public function setNbTickets($nbTickets)
-    {
-        $this->nbTickets = $nbTickets;
-
-        return $this;
-    }
-
-    /**
-     * Get nbTickets
-     *
-     * @return integer
-     */
-    public function getNbTickets()
-    {
-        return $this->nbTickets;
     }
 
     /**

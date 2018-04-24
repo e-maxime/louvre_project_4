@@ -3,82 +3,18 @@
 {% block title %}
 	{{ parent() }} - Réservation
 {% endblock%}
-	
+
 {% block body %}
-	{{ parent() }}
-	<h1>Réserver vos billets</h1>
 
-<div class="well">
-  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+	<p>Vous vous apprêtez à visiter le plus grand musée du monde, fréquenté chaque année par près de 10 millions de visiteurs, dont la mission principale est d’assurer la conservation, l’éducation et la transmission d’un patrimoine aux générations futures.</p>
+	<p>Ce site est dédié exclusivement à la réservation de billet d'entrée pour le Musée, ce qui vous permettra d'éviter la file d'attente lors de l'achat de billet sur place. En fonction des données que vous saisirez sur la page de réservation, un tarif vous sera communiqué :</p>
+	<ul>
+		<li>Tarif normal à 16 € à partir de 12 ans</li>
+		<li>Tarif enfant à 8 € à partir de 4 ans et jusqu'à 12 ans (l'entrée est gratuite pour les enfants de moins de 4 ans)</li>
+		<li>Tarif sénior à 12 € à partir de 60 ans</li>
+		<li>Tarif réduit à 10 € accordé dans certaines conditions (étudiant, employé du musée, d'un service du Ministère de la Culture, militaire, ...)</li>
+	</ul>
 
-  {{ form_errors(form) }}
-
-  {# Génération manuelle et éclatée : #}
-  <div class="form-group">
-    {{ form_label(form.name, "Nom :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-
-    {{ form_errors(form.name) }}
-
-    <div class="col-sm-5">
-      {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
-    </div>
-
-    {{ form_label(form.firstName, "Prénom :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-    {{ form_errors(form.firstName) }}
-
-    <div class="col-sm-5">
-      {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
-    </div>
-
-    {{ form_label(form.birthday, "Date de naissance :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-    {{ form_errors(form.birthday) }}
-
-    <div class="col-sm-10">
-    	{{ form_widget(form.birthday) }}
-    </div>
-
-    {{ form_label(form.country, "Pays d'origine :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-    {{ form_errors(form.country) }}
-
-    <div class="col-sm-4">
-    	{{ form_widget(form.country) }}
-    </div>
-
-    {{ form_label(form.email, "Adresse email :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-    {{ form_errors(form.email) }}
-
-    <div class="col-sm-5">
-      {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
-    </div>
-
-    {{ form_label(form.dayToVisit, "Jour de visite :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-    {{ form_errors(form.dayToVisit) }}
-
-    <div class="col-sm-10">
-    	{{ form_widget(form.dayToVisit) }}
-    </div>
-
-    <div class="col-sm-10">
-      {{ form_widget(form.allDay, {'attr': {'class': 'form-control'}}) }}
-      {{ form_widget(form.halfDay, {'attr': {'class': 'form-control'}}) }}
-    </div>
-
-    <div class="col-sm-10">
-    	{{ form_widget(form.reducePrice, {'attr': {'class': 'form-control'}}) }}
-    </div>
-
-    {{ form_label(form.nbTickets, "Nombre de visiteurs :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-    {{ form_errors(form.nbTickets) }}
-
-    <div class="col-sm-1">
-      {{ form_widget(form.nbTickets, {'attr': {'class': 'form-control'}}) }}
-    </div>
-
-  </div>
-
-  {{ form_widget(form.pay, {'attr': {'class': 'btn btn-primary'}}) }}
-
-  {{ form_end(form) }}
-</div>
+	<p>Pour réserver, <a href="{{ path('project_booking_form') }}">cliquez ici</a> ou dans le lien situé dans le menu<br/>. Nous vous souhaitons une agréable visite au Musée du Louvre.</p>
 
 {% endblock %}

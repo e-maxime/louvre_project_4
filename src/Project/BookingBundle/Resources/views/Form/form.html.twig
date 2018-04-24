@@ -1,0 +1,14 @@
+{% extends "ProjectBookingBundle::layout.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - Réservation
+{% endblock%}
+	
+{% block body %}
+	<h1>Réserver vos billets</h1>
+
+<div class="well">
+  {{ form(form) }}
+</div>
+
+{% endblock %}

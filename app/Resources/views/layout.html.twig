@@ -10,7 +10,14 @@
 </head>
 
 <body>
-	<div class="jumbotron">
+	<nav class="site-header sticky-top py-1" style="background-color: #262626;">
+		<div class="container" style="padding-top: 10px; padding-bottom: 10px;">
+			{% block menu %}
+			{% endblock %}
+		</div>
+	</nav>
+	
+	<div class="jumbotron" style="background-color: #d9d9d9;">
         <div class="container">
           <h1 class="display-3">Musée du Louvre</h1>
         </div>

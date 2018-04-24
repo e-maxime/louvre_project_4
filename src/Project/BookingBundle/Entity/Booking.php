@@ -22,32 +22,9 @@ class Booking
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="normal", type="integer")
+     * @ORM\Column(name="email", type="string", length=255)
      */
-    private $normal;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="child", type="integer")
-     */
-    private $child;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="old", type="integer")
-     */
-    private $old;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="reduce", type="integer")
-     */
-    private $reduce;
+    private $email;
 
 
     /**
@@ -61,99 +38,26 @@ class Booking
     }
 
     /**
-     * Set normal
+     * Set email
      *
-     * @param integer $normal
+     * @param string $email
      *
      * @return Booking
      */
-    public function setNormal($normal)
+    public function setEmail($email)
     {
-        $this->normal = $normal;
+        $this->email = $email;
 
         return $this;
     }
 
     /**
-     * Get normal
+     * Get email
      *
-     * @return int
+     * @return string
      */
-    public function getNormal()
+    public function getEmail()
     {
-        return $this->normal;
-    }
-
-    /**
-     * Set child
-     *
-     * @param integer $child
-     *
-     * @return Booking
-     */
-    public function setChild($child)
-    {
-        $this->child = $child;
-
-        return $this;
-    }
-
-    /**
-     * Get child
-     *
-     * @return int
-     */
-    public function getChild()
-    {
-        return $this->child;
-    }
-
-    /**
-     * Set old
-     *
-     * @param integer $old
-     *
-     * @return Booking
-     */
-    public function setOld($old)
-    {
-        $this->old = $old;
-
-        return $this;
-    }
-
-    /**
-     * Get old
-     *
-     * @return int
-     */
-    public function getOld()
-    {
-        return $this->old;
-    }
-
-    /**
-     * Set reduce
-     *
-     * @param integer $reduce
-     *
-     * @return Booking
-     */
-    public function setReduce($reduce)
-    {
-        $this->reduce = $reduce;
-
-        return $this;
-    }
-
-    /**
-     * Get reduce
-     *
-     * @return int
-     */
-    public function getReduce()
-    {
-        return $this->reduce;
+        return $this->email;
     }
 }
-

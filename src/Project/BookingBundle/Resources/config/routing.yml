@@ -1,3 +1,7 @@
 project_booking_homepage:
     path:     /
+    defaults: { _controller: ProjectBookingBundle:Form:index }
+
+project_booking_form:
+    path: /reserver
     defaults: { _controller: ProjectBookingBundle:Form:booking }

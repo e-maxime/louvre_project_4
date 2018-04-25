@@ -64,9 +64,9 @@ class Ticket
     private $dayToVisit;
 
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="typeOfTicket", type="string", length=255)
+     * @ORM\Column(name="typeOfTicket", type="boolean")
      */
     private $typeOfTicket;
 
@@ -77,6 +77,10 @@ class Ticket
      */
     private $reducePrice = false;
 
+    public function __construct()
+    {
+        $this->dayToVisit = new \DateTime();
+    }
 
     /**
      * Get id

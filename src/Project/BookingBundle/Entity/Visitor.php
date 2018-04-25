@@ -5,12 +5,12 @@ namespace Project\BookingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Form
+ * Visitor
  *
- * @ORM\Table(name="ticket")
- * @ORM\Entity(repositoryClass="Project\BookingBundle\Repository\TicketRepository")
+ * @ORM\Table(name="visitor")
+ * @ORM\Entity(repositoryClass="Project\BookingBundle\Repository\VisitorRepository")
  */
-class Ticket
+class Visitor
 {
     /**
      * @var int
@@ -31,7 +31,7 @@ class Ticket
     /**
      * @var string
      *
-     * @ORM\Column(name="first_name", type="string", length=255)
+     * @ORM\Column(name="firstName", type="string", length=255)
      */
     private $firstName;
 
@@ -50,13 +50,6 @@ class Ticket
     private $country;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255)
-     */
-    private $email;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="dayToVisit", type="date")
@@ -64,23 +57,18 @@ class Ticket
     private $dayToVisit;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="typeOfTicket", type="boolean")
      */
     private $typeOfTicket;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="reducePrice", type="boolean")
      */
-    private $reducePrice = false;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Project\BookingBundle\Entity\Visitor", cascade={"persist"})
-     */
-    private $visitors;
+    private $reducePrice;
 
     public function __construct()
     {
@@ -102,7 +90,7 @@ class Ticket
      *
      * @param string $name
      *
-     * @return Form
+     * @return Visitor
      */
     public function setName($name)
     {
@@ -126,7 +114,7 @@ class Ticket
      *
      * @param string $firstName
      *
-     * @return Form
+     * @return Visitor
      */
     public function setFirstName($firstName)
     {
@@ -150,7 +138,7 @@ class Ticket
      *
      * @param \DateTime $birthday
      *
-     * @return Form
+     * @return Visitor
      */
     public function setBirthday($birthday)
     {
@@ -174,7 +162,7 @@ class Ticket
      *
      * @param string $country
      *
-     * @return Form
+     * @return Visitor
      */
     public function setCountry($country)
     {
@@ -194,35 +182,11 @@ class Ticket
     }
 
     /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return Form
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
      * Set dayToVisit
      *
      * @param \DateTime $dayToVisit
      *
-     * @return Form
+     * @return Visitor
      */
     public function setDayToVisit($dayToVisit)
     {
@@ -244,9 +208,9 @@ class Ticket
     /**
      * Set typeOfTicket
      *
-     * @param string $typeOfTicket
+     * @param boolean $typeOfTicket
      *
-     * @return Form
+     * @return Visitor
      */
     public function setTypeOfTicket($typeOfTicket)
     {
@@ -258,7 +222,7 @@ class Ticket
     /**
      * Get typeOfTicket
      *
-     * @return string
+     * @return bool
      */
     public function getTypeOfTicket()
     {
@@ -270,7 +234,7 @@ class Ticket
      *
      * @param boolean $reducePrice
      *
-     * @return Form
+     * @return Visitor
      */
     public function setReducePrice($reducePrice)
     {
@@ -282,44 +246,10 @@ class Ticket
     /**
      * Get reducePrice
      *
-     * @return boolean
+     * @return bool
      */
     public function getReducePrice()
     {
         return $this->reducePrice;
-    }
-
-    /**
-     * Add visitor
-     *
-     * @param \Project\BookingBundle\Entity\Visitor $visitor
-     *
-     * @return Ticket
-     */
-    public function addVisitor(\Project\BookingBundle\Entity\Visitor $visitor)
-    {
-        $this->visitors[] = $visitor;
-
-        return $this;
-    }
-
-    /**
-     * Remove visitor
-     *
-     * @param \Project\BookingBundle\Entity\Visitor $visitor
-     */
-    public function removeVisitor(\Project\BookingBundle\Entity\Visitor $visitor)
-    {
-        $this->visitors->removeElement($visitor);
-    }
-
-    /**
-     * Get visitors
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getVisitors()
-    {
-        return $this->visitors;
     }
 }

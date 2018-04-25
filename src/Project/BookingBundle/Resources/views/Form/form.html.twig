@@ -8,7 +8,137 @@
 	<h1>Réserver vos billets</h1>
 
 <div class="well">
-  {{ form(form) }}
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {{ form_errors(form) }}
+
+  <div class="form-group">
+
+    {{ form_label(form.name, "Nom :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.name) }}
+    <div class="col-sm-5">
+    	{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <br/>
+
+    {{ form_label(form.firstName, "Prénom :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.firstName) }}
+    <div class="col-sm-5">
+    	{{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <br/>
+
+    {{ form_label(form.birthday, "Date de naissance :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.birthday) }}
+    <div class="col-sm-10">
+    	{{ form_widget(form.birthday) }}
+    </div>
+
+    <br/>
+
+    {{ form_label(form.country, "Pays d'origine :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.country) }}
+    <div class="col-sm-4">
+    	{{ form_widget(form.country) }}
+    </div>
+
+    <br/>
+
+    {{ form_label(form.email, "Adresse email :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.email) }}
+    <div class="col-sm-5">
+    	{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <br/>
+
+    {{ form_label(form.dayToVisit, "Jour de visite :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.dayToVisit) }}
+    <div class="col-sm-10">
+    	{{ form_widget(form.dayToVisit) }}
+    </div>
+
+    <br/>
+
+    {{ form_label(form.typeOfTicket, "Type du ticket :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+  	<div class="col-sm-5">
+  		{{ form_widget(form.typeOfTicket, {'attr': {'class': 'form-control'}}) }}
+  	</div>
+    
+    <br/>
+    
+  	<div class="col-sm-5">
+  		{{ form_widget(form.reducePrice) }}
+  	</div>
+
+  	<hr>
+ 
+ 	<div class="col-sm-5">
+ 		{{ form_row(form.visitors) }}
+  	<a href="#" id="add_visitor" class="btn btn-info">Ajouter un visiteur</a>
+ 	</div>
+
+  </div>
+
+  <div style="text-align: center">
+  	  {{ form_widget(form.order, {'attr': {'class': 'btn btn-primary'}}) }}
+  </div>
+
+  {{ form_end(form) }}
 </div>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+    var $container = $('div#project_bookingbundle_ticket_visitors');
+
+    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+    $('#add_visitor').click(function(e) {
+      addVisitor($container);
+
+      e.preventDefault();
+    });
+
+    // La fonction qui ajoute un formulaire VisitorType
+    function addVisitor($container) {
+      // Dans le contenu de l'attribut « data-prototype », on remplace :
+      // - le texte "__name__label__" qu'il contient par du vide
+      var template = $container.attr('data-prototype')
+        .replace(/__name__label__/g, ' ')
+      ;
+
+      // On crée un objet jquery qui contient ce template
+      var $prototype = $(template);
+
+      // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+      addDeleteLink($prototype);
+
+      // On ajoute le prototype modifié à la fin de la balise <div>
+      $container.append($prototype);
+
+    }
+
+    // La fonction qui ajoute un lien de suppression d'une catégorie
+    function addDeleteLink($prototype) {
+      // Création du lien
+      var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+      // Ajout du lien
+      $prototype.append($deleteLink);
+
+      // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
+      $deleteLink.click(function(e) {
+        $prototype.remove();
+
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        return false;
+      });
+    }
+  });
+</script>
 {% endblock %}
+

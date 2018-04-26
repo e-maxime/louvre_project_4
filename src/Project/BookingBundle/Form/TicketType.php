@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class TicketType extends AbstractType
 {
@@ -31,7 +31,7 @@ class TicketType extends AbstractType
             ->add('dayToVisit', DateType::class, array('format' => 'ddMMyyyy'))
             ->add('typeOfTicket', ChoiceType::class, array('choices' => array('Journée entière' => true, 'Demi-journée' => false)))
             ->add('reducePrice', CheckboxType::class, array('label' => 'Tarif réduit'))
-            ->add('visitors', CollectionType::class, array('entry_type' => TextType::class, 'allow_add' => true, 'allow_delete' => true, 'label' => 'Visiteurs supplémentaires :'))
+            ->add('nbTickets', IntegerType::class)
             ->add('order', SubmitType::class, array('label' => 'Réserver'))
         ;
     }

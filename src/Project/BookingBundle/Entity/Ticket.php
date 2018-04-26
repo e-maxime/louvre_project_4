@@ -78,6 +78,13 @@ class Ticket
     private $reducePrice = false;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="nbTickets", type="integer")
+     */
+    private $nbTickets;
+    
+    /**
      * @ORM\ManyToMany(targetEntity="Project\BookingBundle\Entity\Visitor", cascade={"persist"})
      */
     private $visitors;
@@ -321,5 +328,29 @@ class Ticket
     public function getVisitors()
     {
         return $this->visitors;
+    }
+
+    /**
+     * Set nbTickets
+     *
+     * @param integer $nbTickets
+     *
+     * @return Ticket
+     */
+    public function setNbTickets($nbTickets)
+    {
+        $this->nbTickets = $nbTickets;
+
+        return $this;
+    }
+
+    /**
+     * Get nbTickets
+     *
+     * @return integer
+     */
+    public function getNbTickets()
+    {
+        return $this->nbTickets;
     }
 }

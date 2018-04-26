@@ -3,6 +3,7 @@
 namespace Project\BookingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Form
@@ -60,6 +61,8 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="dayToVisit", type="date")
+     * @Assert\GreaterThanOrEqual("today", message="Vous ne pouvez pas réservé de billets pour un jour passé.")
+     * @Assert\NotEqualTo("tuesday", "sunday", message="Le musée est fermé le Mardi, le 1er Mai, le 1er Novembre et le 25 Décembre.")
      */
     private $dayToVisit;
 
@@ -81,6 +84,7 @@ class Ticket
      * @var int
      *
      * @ORM\Column(name="nbTickets", type="integer")
+     * @Assert\NotBlank
      */
     private $nbTickets;
     

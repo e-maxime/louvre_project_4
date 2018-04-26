@@ -30,7 +30,7 @@ class TicketType extends AbstractType
             ->add('email', EmailType::class)
             ->add('dayToVisit', DateType::class, array('format' => 'ddMMyyyy'))
             ->add('typeOfTicket', ChoiceType::class, array('choices' => array('Journée entière' => true, 'Demi-journée' => false)))
-            ->add('reducePrice', CheckboxType::class, array('label' => 'Tarif réduit'))
+            ->add('reducePrice', CheckboxType::class, array('label' => 'Tarif réduit', 'required' => false))
             ->add('nbTickets', IntegerType::class)
             ->add('order', SubmitType::class, array('label' => 'Réserver'))
         ;

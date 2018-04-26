@@ -5,3 +5,7 @@ project_booking_homepage:
 project_booking_form:
     path: /reserver
     defaults: { _controller: ProjectBookingBundle:Form:booking }
+
+project_booking_visitors:
+    path: /reservation
+    defaults: { _controller: ProjectBookingBundle:Form:addVisitors }

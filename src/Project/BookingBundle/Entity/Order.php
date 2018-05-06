@@ -2,15 +2,17 @@
 
 namespace Project\BookingBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Visitor
+ * Order
  *
- * @ORM\Table(name="visitor")
- * @ORM\Entity(repositoryClass="Project\BookingBundle\Repository\VisitorRepository")
+ * @ORM\Table(name="order")
+ * @ORM\Entity(repositoryClass="Project\BookingBundle\Repository\OrderRepository")
  */
-class Visitor
+class Order
 {
     /**
      * @var int
@@ -31,7 +33,7 @@ class Visitor
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=255)
+     * @ORM\Column(name="first_name", type="string", length=255)
      */
     private $firstName;
 
@@ -50,11 +52,23 @@ class Visitor
     private $country;
 
     /**
-     * @var bool
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
+
+    /**
+     * @var boolean
      *
      * @ORM\Column(name="reducePrice", type="boolean")
      */
-    private $reducePrice;
+    private $reducePrice = false;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Project\BookingBundle\Entity\Visitor", cascade={"persist"})
+     */
+    private $visitors;
 
     /**
      * Get id
@@ -71,7 +85,7 @@ class Visitor
      *
      * @param string $name
      *
-     * @return Visitor
+     * @return Form
      */
     public function setName($name)
     {
@@ -95,7 +109,7 @@ class Visitor
      *
      * @param string $firstName
      *
-     * @return Visitor
+     * @return Form
      */
     public function setFirstName($firstName)
     {
@@ -119,7 +133,7 @@ class Visitor
      *
      * @param \DateTime $birthday
      *
-     * @return Visitor
+     * @return Form
      */
     public function setBirthday($birthday)
     {
@@ -143,7 +157,7 @@ class Visitor
      *
      * @param string $country
      *
-     * @return Visitor
+     * @return Form
      */
     public function setCountry($country)
     {
@@ -163,11 +177,35 @@ class Visitor
     }
 
     /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Form
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
      * Set reducePrice
      *
      * @param boolean $reducePrice
      *
-     * @return Visitor
+     * @return Form
      */
     public function setReducePrice($reducePrice)
     {
@@ -179,10 +217,51 @@ class Visitor
     /**
      * Get reducePrice
      *
-     * @return bool
+     * @return boolean
      */
     public function getReducePrice()
     {
         return $this->reducePrice;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->visitors = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add visitor
+     *
+     * @param \Project\BookingBundle\Entity\Visitor $visitor
+     *
+     * @return Order
+     */
+    public function addVisitor(\Project\BookingBundle\Entity\Visitor $visitor)
+    {
+        $this->visitors[] = $visitor;
+
+        return $this;
+    }
+
+    /**
+     * Remove visitor
+     *
+     * @param \Project\BookingBundle\Entity\Visitor $visitor
+     */
+    public function removeVisitor(\Project\BookingBundle\Entity\Visitor $visitor)
+    {
+        $this->visitors->removeElement($visitor);
+    }
+
+    /**
+     * Get visitors
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisitors()
+    {
+        return $this->visitors;
     }
 }

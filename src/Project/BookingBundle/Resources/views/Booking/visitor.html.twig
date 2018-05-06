@@ -1,0 +1,47 @@
+  <hr>
+
+  {{ form_start(visitorForm, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {{ form_errors(visitorForm) }}
+
+  <div class="form-group" style="background-color: yellow;">
+
+    {{ form_label(visitorForm.name, "Nom :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(visitorForm.name) }}
+    <div class="col-sm-5">
+    	{{ form_widget(visitorForm.name, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <br/>
+
+    {{ form_label(visitorForm.firstName, "Prénom :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(visitorForm.firstName) }}
+    <div class="col-sm-5">
+    	{{ form_widget(visitorForm.firstName, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <br/>
+
+    {{ form_label(visitorForm.birthday, "Date de naissance :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(visitorForm.birthday) }}
+    <div class="col-sm-10">
+    	{{ form_widget(visitorForm.birthday) }}
+    </div>
+
+    <br/>
+
+    {{ form_label(visitorForm.country, "Pays d'origine :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(visitorForm.country) }}
+    <div class="col-sm-4">
+    	{{ form_widget(visitorForm.country) }}
+    </div>
+
+    <br/>
+
+    <div class="col-sm-5">
+      {{ form_widget(visitorForm.reducePrice) }}
+    </div>
+  </div>
+
+  {{ form_end(visitorForm) }}
+

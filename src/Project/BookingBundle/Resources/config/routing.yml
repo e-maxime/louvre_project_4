@@ -2,10 +2,14 @@ project_booking_homepage:
     path:     /
     defaults: { _controller: ProjectBookingBundle:Form:index }
 
-project_booking_form:
+project_booking_ticket:
     path: /reserver
-    defaults: { _controller: ProjectBookingBundle:Form:booking }
+    defaults: { _controller: ProjectBookingBundle:Form:ticket } 
 
-project_booking_visitors:
-    path: /reservation
-    defaults: { _controller: ProjectBookingBundle:Form:addVisitors }
+project_booking_order:
+    path: /ajout_des_informations
+    defaults: { _controller: ProjectBookingBundle:Form:order }
+
+project_booking_payment:
+    path: /payer
+    defaults: { _controller: ProjectBookingBundle:Form:payment }

@@ -1,0 +1,79 @@
+{% extends "ProjectBookingBundle::layout.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - Réservation
+{% endblock%}
+	
+{% block body %}
+	<h1>Réserver vos billets - Ajout des informations</h1>
+
+<div class="well">
+  {{ form_start(orderForm, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {{ form_errors(orderForm) }}
+
+   <div class="form-group">
+<!--
+    
+    {# {{ form_label(orderForm.name, "Nom :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(orderForm.name) }}
+    <div class="col-sm-5">
+    	{{ form_widget(orderForm.name, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <br/>
+
+    {{ form_label(orderForm.firstName, "Prénom :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(orderForm.firstName) }}
+    <div class="col-sm-5">
+    	{{ form_widget(orderForm.firstName, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <br/>
+
+    {{ form_label(orderForm.birthday, "Date de naissance :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(orderForm.birthday) }}
+    <div class="col-sm-10">
+    	{{ form_widget(orderForm.birthday) }}
+    </div>
+
+    <br/>
+
+    {{ form_label(orderForm.country, "Pays d'origine :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(orderForm.country) }}
+    <div class="col-sm-4">
+    	{{ form_widget(orderForm.country) }}
+    </div>
+
+    <br/>
+
+    
+
+    <br/>
+
+    <div class="col-sm-5">
+      {{ form_widget(orderForm.reducePrice) }}
+    </div> #} -->
+    
+    {{ form_label(orderForm.email, "Adresse email :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(orderForm.email) }}
+    <div class="col-sm-5">
+      {{ form_widget(orderForm.email, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <h2>Billets : </h2>
+    {% for visitor in orderForm.visitors %}
+
+    {{ form_widget(visitor) }}
+
+    {% endfor %}
+  </div>
+
+  <div style="text-align: center">
+  	  {{ form_widget(orderForm.order, {'attr': {'class': 'btn btn-primary'}}) }}
+  </div>
+
+  {{ form_end(orderForm) }}
+</div>
+
+{% endblock %}
+

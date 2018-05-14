@@ -1,11 +1,11 @@
 <?php
 namespace Project\BookingBundle\Controller;
 
-use Project\BookingBundle\Entity\Order;
+use Project\BookingBundle\Entity\Command;
 use Project\BookingBundle\Entity\Ticket;
 use Project\BookingBundle\Entity\Visitor;
 use Project\BookingBundle\Form\TicketType;
-use Project\BookingBundle\Form\OrderType;
+use Project\BookingBundle\Form\CommandType;
 use Project\BookingBundle\Form\VisitorType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,83 +24,97 @@ class FormController extends Controller
 	{
 		$ticket = new Ticket();
 
+
+		// Récupération du nombre de billets vendus
+		$repository = $this->getDoctrine()->getManager()->getRepository('ProjectBookingBundle:Ticket');
+		$nbOfTickets = $repository->getNbTicketsSold('2018-05-11');
+		$nbTickets = $repository->getNbTickets(); 
+		
+		for($i = 0; $i < $nbTickets; $i++)
+		{
+			$valeurs = array_column($nbOfTickets, 'nbTickets');
+		}
+
+		$somme = array_sum($valeurs);
+		dump($somme);
+		// fin
+
 		$ticketForm = $this->createForm(TicketType::class, $ticket, array(
-																'action' => $this->generateUrl('project_booking_order'), 
+																'action' => $this->generateUrl('project_booking_command'), 
 																'method' => 'POST')
 																);
-
 
 		return $this->render('ProjectBookingBundle:Booking:ticket.html.twig', array('ticketForm' => $ticketForm->createView()));		
 	}
 
-	public function orderAction(Request $request)
+	public function commandAction(Request $request)
 	{
-		/*
-
-		for($i = 0; $i < $nbTickets; $i++)
-		{
-			$ticket = new Ticket();
-			$order->getVisitors();
-		}
-
-		
-
-
-		if ($request->isMethod('POST'))
-		{
-			$orderForm->handleRequest($request);
-
-			if($orderForm->isSubmitted() && $orderForm->isValid())
-			{
-				$em = $this->getDoctrine()->getManager();
-				$em->persist($orderForm);
-				$em->flush();
-				return $this->render('ProjectBookingBundle:Form:payment.html.twig');
-			}
-		}*/
-
 		$ticket = new Ticket();
 
 		$ticketForm = $this->createForm(TicketType::class, $ticket, array(
-																'action' => $this->generateUrl('project_booking_order'), 
+																'action' => $this->generateUrl('project_booking_command'), 
 																'method' => 'POST')
 																);
 
 		if($request->isMethod('POST'))
 		{
-		
-
-			
-
 			$ticketForm->handleRequest($request);
-			
-				dump($ticketForm->getData());
 
-				$nbOfTickets = $ticketForm->getData()->getNbTickets();
-				dump($nbOfTickets);
-				/*
-				return $this->redirectToRoute('project_booking_order');
+				if($ticketForm->isValid())
+				{
+					$nbOfTickets = $ticketForm->getData()->getNbTickets();
 
-		array('orderForm' => $orderForm->createView(),)
-				*/
-			$order = new Order();
+					dump($nbOfTickets);
 
-			for($i = 0; $i < $nbOfTickets; $i++)
-			{
-				$order->addVisitor(new Visitor());
-			}
+					$session = new Session();
+					$session->set('ticketData', $ticket);
 
-		$orderForm = $this->createForm(OrderType::class, $order);
+					/*$em = $this->getDoctrine()->getManager();
+					$em->persist($ticket);*/
 
-		return $this->render('ProjectBookingBundle:Booking:order.html.twig', array('orderForm' => $orderForm->createView(), 'nbOfTickets' => $nbOfTickets));
-			
+					$command = new Command();
+
+					for($i = 0; $i < $nbOfTickets; $i++)
+					{
+						$command->addVisitor(new Visitor());
+					}
+
+					$commandForm = $this->createForm(CommandType::class, $command, array('action' => $this->generateUrl('project_booking_payment'), 'method' => 'POST'));
+
+					return $this->render('ProjectBookingBundle:Booking:command.html.twig', array('commandForm' => $commandForm->createView(), 'nbOfTickets' => $nbOfTickets));
+				}
 		}
 
-		return $this->redirectToRoute('project_booking_ticket');
+		return $this->render('ProjectBookingBundle:Booking:ticket.html.twig', array('ticketForm' => $ticketForm->createView()));
 	}
 
 	public function paymentAction(Request $request)
 	{
-		return $this->render('ProjectBookingBundle:Booking:payment.html.twig');
+		$session = new Session();
+
+		$command = new Command();
+		
+		$commandForm = $this->createForm(CommandType::class, $command, array('action' => $this->generateUrl('project_booking_payment'), 'method' => 'POST'));
+
+		if($request->isMethod('POST'))
+		{
+			$commandForm->handleRequest($request);
+
+			dump($commandForm->getData());
+
+			if ($commandForm->isValid())
+			{
+				$session->get('ticketData')->setCommand($command);
+
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($session->get('ticketData'));
+				$em->persist($command);
+				$em->flush();
+
+				return $this->render('ProjectBookingBundle:Booking:payment.html.twig');
+			}
+			return $this->redirectToRoute('project_booking_command');
+		}
+		return $this->redirectToRoute('project_booking_ticket');
 	}
 }

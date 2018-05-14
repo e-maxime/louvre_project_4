@@ -17,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class OrderType extends AbstractType
+class CommandType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -27,7 +27,7 @@ class OrderType extends AbstractType
         $builder
             ->add('email', EmailType::class)
             ->add('visitors', CollectionType::class, array('entry_type' => VisitorType::class, 'entry_options' => array('label' => false), 'allow_add' => true))
-            ->add('order', SubmitType::class, array('label' => 'Réserver'))
+            ->add('command', SubmitType::class, array('label' => 'Réserver'))
         ;
     }
 
@@ -37,7 +37,7 @@ class OrderType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Project\BookingBundle\Entity\Order'
+            'data_class' => 'Project\BookingBundle\Entity\Command'
         ));
     }
 
@@ -46,7 +46,7 @@ class OrderType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'project_bookingbundle_order';
+        return 'project_bookingbundle_command';
     }
 
 

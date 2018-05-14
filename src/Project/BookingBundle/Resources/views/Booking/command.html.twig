@@ -1,0 +1,42 @@
+{% extends "ProjectBookingBundle::layout.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - Réservation
+{% endblock%}
+	
+{% block body %}
+	<h1>Réserver vos billets - Ajout des informations</h1>
+
+<div class="well">
+  {{ form_start(commandForm, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {{ form_errors(commandForm) }}
+
+   <div class="form-group">
+    
+    {{ form_label(commandForm.email, "Adresse email :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(commandForm.email) }}
+    <div class="col-sm-5">
+      {{ form_widget(commandForm.email, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    
+    <br/>
+    <hr>
+    
+    <h2>Billets : </h2>
+    {% for visitor in commandForm.visitors %}
+
+    {{ form_widget(visitor) }}
+
+    {% endfor %}
+    
+    </div>
+
+    <div style="text-align: center">
+  	   {{ form_widget(commandForm.command, {'attr': {'class': 'btn btn-primary'}}) }}
+    </div>
+
+  {{ form_end(commandForm) }}
+</div>
+
+{% endblock %}

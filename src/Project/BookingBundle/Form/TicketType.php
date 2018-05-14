@@ -19,7 +19,7 @@ class TicketType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('dayToVisit', DateType::class, array('format' => 'ddMMyy'))
+            ->add('dayToVisit', DateType::class, array('format' => 'ddMMyyyy'))
             ->add('typeOfTicket', ChoiceType::class, array('choices' => array('Journée entière' => true, 'Demi-journée' => false), 'expanded' => true))
             ->add('nbTickets', IntegerType::class)
             ->add('booked', SubmitType::class, array('label' => 'Réserver'))

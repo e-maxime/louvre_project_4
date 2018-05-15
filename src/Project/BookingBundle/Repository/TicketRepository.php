@@ -12,20 +12,20 @@ class TicketRepository extends \Doctrine\ORM\EntityRepository
 {
 	public function getNbTickets()
 	{
-		$qb = $this->createQueryBuilder('t');
+	/*	$qb = $this->createQueryBuilder('t');
 		$qb->select('COUNT(\'nbTickets\')');
 
-		return $qb->getQuery()->getSingleScalarResult();
+		return $qb->getQuery()->getSingleScalarResult();*/
 	}
 
 	public function getNbTicketsSold($dayToVisit)
 	{
-		$query = $this->_em->createQuery('SELECT t.nbTickets FROM ProjectBookingBundle:Ticket t WHERE t.dayToVisit = :dayToVisit');
+		/*$query = $this->_em->createQuery('SELECT t.nbTickets FROM ProjectBookingBundle:Ticket t WHERE t.dayToVisit = :dayToVisit');
 
 		$query->setParameter('dayToVisit', $dayToVisit);
 
 		$results = $query->getResult();
 
-		return $results;
+		return $results;*/
 	}
 }

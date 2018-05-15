@@ -57,6 +57,11 @@ class Visitor
     private $reducePrice;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Project\BookingBundle\Entity\Ticket", inversedBy="visitors", cascade={"persist"})
+     */
+    private $ticket;
+
+    /**
      * Get id
      *
      * @return int
@@ -184,5 +189,29 @@ class Visitor
     public function getReducePrice()
     {
         return $this->reducePrice;
+    }
+
+    /**
+     * Set ticket
+     *
+     * @param \Project\BookingBundle\Entity\Ticket $ticket
+     *
+     * @return Visitor
+     */
+    public function setTicket(\Project\BookingBundle\Entity\Ticket $ticket = null)
+    {
+        $this->ticket = $ticket;
+
+        return $this;
+    }
+
+    /**
+     * Get ticket
+     *
+     * @return \Project\BookingBundle\Entity\Ticket
+     */
+    public function getTicket()
+    {
+        return $this->ticket;
     }
 }

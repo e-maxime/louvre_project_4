@@ -12,6 +12,14 @@
       {{ form_errors(ticketForm) }}
       <div class="form-group">
 
+      {{ form_label(ticketForm.email, "Adresse email :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+      {{ form_errors(ticketForm.email) }}
+      <div class="col-sm-4">
+         {{ form_widget(ticketForm.email, {'attr': {'class': 'form-control'}}) }}
+      </div>
+
+      <br />
+
       {{ form_label(ticketForm.dayToVisit, "Jour de visite :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
       
       <div class="col-sm-5">

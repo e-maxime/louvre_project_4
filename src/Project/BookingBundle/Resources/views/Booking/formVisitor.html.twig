@@ -1,0 +1,27 @@
+{% extends "ProjectBookingBundle::layout.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - Réservation
+{% endblock%}
+	
+{% block body %}
+	<h1>Réserver vos billets - Ajout des informations</h1>
+   <br/>
+      <h2>Billets : </h2>
+      <br/>
+   
+      <div class="well">
+         {{ form_start(visitorForm, {'attr': {'class': 'form-horizontal'}}) }}
+         {{ form_errors(visitorForm) }}
+      
+         <div class="form-group">
+            {% for visitor in visitorForm.visitors %}
+               {{ form_widget(visitor) }}
+               <br/>
+               <hr>
+               <br/>
+            {% endfor %}
+         </div>
+         {{ form_end(visitorForm) }}
+      </div>
+{% endblock %}

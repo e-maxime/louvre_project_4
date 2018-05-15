@@ -6,9 +6,9 @@ project_booking_ticket:
     path: /reserver
     defaults: { _controller: ProjectBookingBundle:Form:ticket } 
 
-project_booking_command:
+project_booking_visitor:
     path: /ajout_des_informations
-    defaults: { _controller: ProjectBookingBundle:Form:command }
+    defaults: { _controller: ProjectBookingBundle:Form:visitor }
 
 project_booking_payment:
     path: /payer

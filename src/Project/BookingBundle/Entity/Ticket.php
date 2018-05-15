@@ -5,6 +5,7 @@ namespace Project\BookingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Project\BookingBundle\Validator\Constraints as MyAssert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Ticket
@@ -23,6 +24,13 @@ class Ticket
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
 
     /**
      * @var \DateTime
@@ -45,22 +53,21 @@ class Ticket
     /**
      * @var int
      *
-     * @ORM\Column(name="nbTickets", type="integer")
+     * 
      * @Assert\NotBlank
      * @Assert\GreaterThan(0, message="Vous devez réserver au moins 1 billet.")
      */
     private $nbTickets;
 
     /**
-     * @ORM\OneToOne(targetEntity="Project\BookingBundle\Entity\Command", inversedBy="ticket")
-     * @ORM\JoinColumn(name="command_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Project\BookingBundle\Entity\Visitor", mappedBy="ticket")
      */
-    private $command;
-
+    private $visitors;
     
     public function __construct()
     {
         $this->dayToVisit = new \DateTime();
+        $this->visitors = new ArrayCollection();
     }
 
     /**
@@ -146,26 +153,62 @@ class Ticket
     }
 
     /**
-     * Set command
+     * Set email
      *
-     * @param \Project\BookingBundle\Entity\Command $command
+     * @param string $email
      *
      * @return Ticket
      */
-    public function setCommand(\Project\BookingBundle\Entity\Command $command = null)
+    public function setEmail($email)
     {
-        $this->command = $command;
+        $this->email = $email;
 
         return $this;
     }
 
     /**
-     * Get command
+     * Get email
      *
-     * @return \Project\BookingBundle\Entity\Command
+     * @return string
      */
-    public function getCommand()
+    public function getEmail()
     {
-        return $this->command;
+        return $this->email;
+    }
+
+    /**
+     * Add visitor
+     *
+     * @param \Project\BookingBundle\Entity\Visitor $visitor
+     *
+     * @return Ticket
+     */
+    public function addVisitor(\Project\BookingBundle\Entity\Visitor $visitor)
+    {
+        $this->visitors[] = $visitor;
+
+        $visitor->setTicket($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove visitor
+     *
+     * @param \Project\BookingBundle\Entity\Visitor $visitor
+     */
+    public function removeVisitor(\Project\BookingBundle\Entity\Visitor $visitor)
+    {
+        $this->visitors->removeElement($visitor);
+    }
+
+    /**
+     * Get visitors
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisitors()
+    {
+        return $this->visitors;
     }
 }

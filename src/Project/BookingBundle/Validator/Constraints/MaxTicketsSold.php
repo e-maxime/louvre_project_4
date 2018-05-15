@@ -12,7 +12,7 @@ class MaxTicketsSold extends Constraint
 
 	public function validatedBy()
 	{
-		return get_class($this).'Validator';
+		return 'project_booking_maxticketssold';
 	}
 }
 

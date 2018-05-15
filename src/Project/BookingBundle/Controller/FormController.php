@@ -7,6 +7,8 @@ use Project\BookingBundle\Entity\Visitor;
 use Project\BookingBundle\Form\TicketType;
 use Project\BookingBundle\Form\CommandType;
 use Project\BookingBundle\Form\VisitorType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,35 +26,21 @@ class FormController extends Controller
 	{
 		$ticket = new Ticket();
 
-
-		// Récupération du nombre de billets vendus
-		$repository = $this->getDoctrine()->getManager()->getRepository('ProjectBookingBundle:Ticket');
-		$nbOfTickets = $repository->getNbTicketsSold('2018-05-11');
-		$nbTickets = $repository->getNbTickets(); 
-		
-		for($i = 0; $i < $nbTickets; $i++)
-		{
-			$valeurs = array_column($nbOfTickets, 'nbTickets');
-		}
-
-		$somme = array_sum($valeurs);
-		dump($somme);
-		// fin
-
 		$ticketForm = $this->createForm(TicketType::class, $ticket, array(
-																'action' => $this->generateUrl('project_booking_command'), 
+																'action' => $this->generateUrl('project_booking_visitor'), 
 																'method' => 'POST')
 																);
 
 		return $this->render('ProjectBookingBundle:Booking:ticket.html.twig', array('ticketForm' => $ticketForm->createView()));		
 	}
 
-	public function commandAction(Request $request)
+	public function visitorAction(Request $request)
 	{
 		$ticket = new Ticket();
+		$session = new Session();
 
 		$ticketForm = $this->createForm(TicketType::class, $ticket, array(
-																'action' => $this->generateUrl('project_booking_command'), 
+																'action' => $this->generateUrl('project_booking_visitor'), 
 																'method' => 'POST')
 																);
 
@@ -63,25 +51,28 @@ class FormController extends Controller
 				if($ticketForm->isValid())
 				{
 					$nbOfTickets = $ticketForm->getData()->getNbTickets();
-
+					
 					dump($nbOfTickets);
 
-					$session = new Session();
 					$session->set('ticketData', $ticket);
 
-					/*$em = $this->getDoctrine()->getManager();
-					$em->persist($ticket);*/
-
-					$command = new Command();
+					dump($session->get('ticketData'));
 
 					for($i = 0; $i < $nbOfTickets; $i++)
 					{
-						$command->addVisitor(new Visitor());
+						$ticket->addVisitor(new Visitor());
 					}
 
-					$commandForm = $this->createForm(CommandType::class, $command, array('action' => $this->generateUrl('project_booking_payment'), 'method' => 'POST'));
+					
+					$visitorForm = $this->createFormBuilder($ticket)
+									->setAction($this->generateUrl('project_booking_payment'))
+								 	->setMethod('POST')
+									->add('visitors', CollectionType::class, array('entry_type' => VisitorType::class, 'entry_options' => array('label' => false), 'allow_add' => true))
+            						->add('command', SubmitType::class, array('label' => 'Commander'))
+            						->getForm();
+					
 
-					return $this->render('ProjectBookingBundle:Booking:command.html.twig', array('commandForm' => $commandForm->createView(), 'nbOfTickets' => $nbOfTickets));
+					return $this->render('ProjectBookingBundle:Booking:formVisitor.html.twig', array('visitorForm' => $visitorForm->createView()));
 				}
 		}
 
@@ -91,29 +82,33 @@ class FormController extends Controller
 	public function paymentAction(Request $request)
 	{
 		$session = new Session();
+		$ticket = new Ticket();
+		$visitor = new Visitor();
 
-		$command = new Command();
-		
-		$commandForm = $this->createForm(CommandType::class, $command, array('action' => $this->generateUrl('project_booking_payment'), 'method' => 'POST'));
+		$visitorForm = $this->createFormBuilder($ticket)
+									->setAction($this->generateUrl('project_booking_payment'))
+								 	->setMethod('POST')
+									->add('visitors', CollectionType::class, array('entry_type' => VisitorType::class, 'entry_options' => array('label' => false), 'allow_add' => true))
+            						->add('command', SubmitType::class, array('label' => 'Commander'))
+            						->getForm();
 
 		if($request->isMethod('POST'))
 		{
-			$commandForm->handleRequest($request);
+			$visitorForm->handleRequest($request);
 
-			dump($commandForm->getData());
+				// dump($visitorForm->getData()); // Array collection prit en compte mais les valeurs des champs typeOfTicket, dayToVisit, etc NULL
 
-			if ($commandForm->isValid())
-			{
-				$session->get('ticketData')->setCommand($command);
+				// $session->get('ticketData')->setTicket($visitor);
+				// dump($session->get('ticketData')); // Données TRUE sauf ArrayCollection
 
 				$em = $this->getDoctrine()->getManager();
-				$em->persist($session->get('ticketData'));
-				$em->persist($command);
-				$em->flush();
+				// $em->persist($session->get('ticketData'));
+				// $em->flush();
 
 				return $this->render('ProjectBookingBundle:Booking:payment.html.twig');
-			}
-			return $this->redirectToRoute('project_booking_command');
+			
+			
+			// return $this->redirectToRoute('project_booking_visitor');
 		}
 		return $this->redirectToRoute('project_booking_ticket');
 	}

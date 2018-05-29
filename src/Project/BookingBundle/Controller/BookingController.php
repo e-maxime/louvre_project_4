@@ -42,7 +42,10 @@ class BookingController extends Controller
         if($bookingForm->isSubmitted() && $bookingForm->isValid())
         {
             $bookingManager->generateTickets($booking);
-//            $entityManager->persist($booking);
+            $booking = $bookingForm->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($booking);
+            dump($booking);
 
             return $this->redirectToRoute('visitor');
         }
@@ -65,6 +68,7 @@ class BookingController extends Controller
         $visitorForm->handleRequest($request);
         if($visitorForm->isSubmitted() && $visitorForm->isValid())
         {
+//            $entityManager = $this->getDoctrine()->getManager();
 //            $entityManager->persist($visitor);
 //            $entityManager->flush();
 

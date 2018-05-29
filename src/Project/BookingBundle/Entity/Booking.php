@@ -8,13 +8,13 @@ use Project\BookingBundle\Validator\Constraints as MyAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Ticket
+ * Booking
  *
  * @ORM\Table(name="ticket")
  * @ORM\Entity(repositoryClass="Project\BookingBundle\Repository\TicketRepository")
  * @MyAssert\HourExceeds
  */
-class Ticket
+class Booking
 {
     /**
      * @var int
@@ -85,7 +85,7 @@ class Ticket
      *
      * @param \DateTime $dayToVisit
      *
-     * @return Ticket
+     * @return Booking
      */
     public function setDayToVisit($dayToVisit)
     {
@@ -109,7 +109,7 @@ class Ticket
      *
      * @param boolean $typeOfTicket
      *
-     * @return Ticket
+     * @return Booking
      */
     public function setTypeOfTicket($typeOfTicket)
     {
@@ -133,7 +133,7 @@ class Ticket
      *
      * @param integer $nbTickets
      *
-     * @return Ticket
+     * @return Booking
      */
     public function setNbTickets($nbTickets)
     {
@@ -157,7 +157,7 @@ class Ticket
      *
      * @param string $email
      *
-     * @return Ticket
+     * @return Booking
      */
     public function setEmail($email)
     {
@@ -179,11 +179,11 @@ class Ticket
     /**
      * Add visitor
      *
-     * @param \Project\BookingBundle\Entity\Visitor $visitor
+     * @param Visitor $visitor
      *
-     * @return Ticket
+     * @return Booking
      */
-    public function addVisitor(\Project\BookingBundle\Entity\Visitor $visitor)
+    public function addVisitor(Visitor $visitor)
     {
         $this->visitors[] = $visitor;
 
@@ -195,9 +195,9 @@ class Ticket
     /**
      * Remove visitor
      *
-     * @param \Project\BookingBundle\Entity\Visitor $visitor
+     * @param Visitor $visitor
      */
-    public function removeVisitor(\Project\BookingBundle\Entity\Visitor $visitor)
+    public function removeVisitor(Visitor $visitor)
     {
         $this->visitors->removeElement($visitor);
     }

@@ -13,6 +13,7 @@
 	<nav class="site-header sticky-top py-1" style="background-color: #262626;">
 		<div class="container" style="padding-top: 10px; padding-bottom: 10px;">
 			{% block menu %}
+				{{ include("Booking/menu.html.twig") }}
 			{% endblock %}
 		</div>
 	</nav>
@@ -25,6 +26,9 @@
 
     <div class="container">
     	{% block body  %}
+			<p>
+				Bienvenue sur le site de réservation de billet pour le musée du Louvre. Acheter vos billets directement en ligne et gagner du temps sur votre visite !
+			</p>
 		{% endblock %}
 	
 		<hr>
@@ -36,8 +40,7 @@
 	</footer>
 
 	{% block javascripts %}
-    	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
   	{% endblock %}
 </body>
 </html>

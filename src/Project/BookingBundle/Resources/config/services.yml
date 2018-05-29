@@ -1,6 +1,0 @@
-services:
-    project_booking.validator.maxticketssold:
-        class: Project\BookingBundle\Validator\Constraints\MaxTicketsSoldValidator
-        arguments: ["@request_stack", "@doctrine.orm.entity_manager"]
-        tags:
-            - { name: validator.constraint_validator, alias: project_booking_maxticketssold }

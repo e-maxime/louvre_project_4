@@ -14,7 +14,7 @@ class WrongdayValidator extends ConstraintValidator
 			$value == new \DateTime('01-11-'.$year) ||
 			$value == new \DateTime('25-12-'.$year))
 		{
-			$this->context->addViolation($constraint->message);
+			$this->context->buildViolation($constraint->message)->addViolation();
 		}
 	}
 }

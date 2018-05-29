@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Réservation
+{% endblock%}
+
+{% block body %}
+    <h1>Réserver vos billets - Ajout des informations</h1>
+    <br/>
+    <h2>Billets : </h2>
+    <br/>
+
+    <div class="well">
+        {{ form(visitorForm) }}
+    </div>
+{% endblock %}

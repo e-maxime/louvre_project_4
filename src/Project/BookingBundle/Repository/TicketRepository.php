@@ -20,7 +20,7 @@ class TicketRepository extends \Doctrine\ORM\EntityRepository
 
 	public function getNbTicketsSold($dayToVisit)
 	{
-		/*$query = $this->_em->createQuery('SELECT t.nbTickets FROM ProjectBookingBundle:Ticket t WHERE t.dayToVisit = :dayToVisit');
+		/*$query = $this->_em->createQuery('SELECT t.nbTickets FROM ProjectBookingBundle:Booking t WHERE t.dayToVisit = :dayToVisit');
 
 		$query->setParameter('dayToVisit', $dayToVisit);
 

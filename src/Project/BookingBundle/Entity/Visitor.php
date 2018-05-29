@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Visitor
 {
+    const PRICE_CHILD = 8;
+    const PRICE_NORMAL = 16;
+    const PRICE_OLD = 12;
+    const PRICE_REDUCED = 10;
+
     /**
      * @var int
      *
@@ -57,7 +62,7 @@ class Visitor
     private $reducePrice;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Project\BookingBundle\Entity\Ticket", inversedBy="visitors", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Project\BookingBundle\Entity\Booking", inversedBy="visitors", cascade={"persist"})
      */
     private $ticket;
 
@@ -194,11 +199,11 @@ class Visitor
     /**
      * Set ticket
      *
-     * @param \Project\BookingBundle\Entity\Ticket $ticket
+     * @param \Project\BookingBundle\Entity\Booking $ticket
      *
      * @return Visitor
      */
-    public function setTicket(\Project\BookingBundle\Entity\Ticket $ticket = null)
+    public function setTicket(Booking $ticket = null)
     {
         $this->ticket = $ticket;
 
@@ -208,7 +213,7 @@ class Visitor
     /**
      * Get ticket
      *
-     * @return \Project\BookingBundle\Entity\Ticket
+     * @return \Project\BookingBundle\Entity\Booking
      */
     public function getTicket()
     {

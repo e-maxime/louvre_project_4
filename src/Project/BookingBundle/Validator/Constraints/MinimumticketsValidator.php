@@ -6,7 +6,11 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class MinimumticketsValidator extends ConstraintValidator
 {
-	public function validate($value, Constraint $constraint)
+    /**
+     * @param $value
+     * @param Constraint $constraint
+     */
+    public function validate($value, Constraint $constraint)
 	{
 		if($value <= 0)
 		{

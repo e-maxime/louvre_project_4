@@ -2,6 +2,7 @@
 
 namespace Project\BookingBundle\Form;
 
+use Project\BookingBundle\Entity\Visitor;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,7 +34,7 @@ class VisitorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Project\BookingBundle\Entity\Visitor'
+            'data_class' => Visitor::class
         ));
     }
 

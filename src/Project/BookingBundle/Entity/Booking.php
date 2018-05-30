@@ -11,11 +11,15 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Booking
  *
  * @ORM\Table(name="ticket")
- * @ORM\Entity(repositoryClass="Project\BookingBundle\Repository\TicketRepository")
+ * @ORM\Entity(repositoryClass="BookingRepository")
  * @MyAssert\HourExceeds
  */
 class Booking
 {
+
+    const TYPE_HALF_DAY = false;
+    const TYPE_FULL_DAY = true;
+
     /**
      * @var int
      *
@@ -68,6 +72,7 @@ class Booking
     {
         $this->dayToVisit = new \DateTime();
         $this->visitors = new ArrayCollection();
+        $this->typeOfTicket = Booking::TYPE_FULL_DAY;
     }
 
     /**

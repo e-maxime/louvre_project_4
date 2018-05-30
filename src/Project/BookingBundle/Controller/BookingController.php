@@ -2,11 +2,9 @@
 
 namespace Project\BookingBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\OptimisticLockException;
-use Project\BookingBundle\Entity\Visitor;
+use Project\BookingBundle\Entity\Booking;
 use Project\BookingBundle\Form\BookingType;
-use Project\BookingBundle\Form\VisitorType;
+use Project\BookingBundle\Form\BookingVisitorsType;
 use Project\BookingBundle\Manager\BookingManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +25,6 @@ class BookingController extends Controller
     /**
      * @param Request $request
      * @param BookingManager $bookingManager
-     * @param EntityManager $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/reserver", name="booking")
      */
@@ -42,10 +39,6 @@ class BookingController extends Controller
         if($bookingForm->isSubmitted() && $bookingForm->isValid())
         {
             $bookingManager->generateTickets($booking);
-            $booking = $bookingForm->getData();
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($booking);
-            dump($booking);
 
             return $this->redirectToRoute('visitor');
         }
@@ -55,23 +48,20 @@ class BookingController extends Controller
 
     /**
      * @param Request $request
-     * @param EntityManager $entityManager
+     * @param BookingManager $bookingManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws OptimisticLockException
      * @Route("/informations_visiteurs", name="visitor")
      */
-    public function visitorAction(Request $request)
+    public function visitorAction(Request $request, BookingManager $bookingManager)
     {
-        $visitor = new Visitor();
-        $visitorForm = $this->createForm(VisitorType::class, $visitor);
+        /** @var Booking $booking */
+        $booking = $bookingManager->getCurrentBooking();
+
+        $visitorForm = $this->createForm(BookingVisitorsType::class, $booking);
 
         $visitorForm->handleRequest($request);
         if($visitorForm->isSubmitted() && $visitorForm->isValid())
         {
-//            $entityManager = $this->getDoctrine()->getManager();
-//            $entityManager->persist($visitor);
-//            $entityManager->flush();
-
             return $this->redirectToRoute('payment');
         }
         return $this->render('Booking/visitor.html.twig', array('visitorForm' => $visitorForm->createView()));
@@ -83,6 +73,12 @@ class BookingController extends Controller
      */
     public function paymentAction()
     {
+        /*$booking = $session->get('booking');
+        dump($booking);
+
+        if($request->isMethod('POST')){
+            //Gérer paiement
+        }*/
         return $this->render('Booking/payment.html.twig');
     }
 }

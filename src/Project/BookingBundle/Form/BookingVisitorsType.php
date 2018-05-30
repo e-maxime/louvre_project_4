@@ -4,14 +4,12 @@ namespace Project\BookingBundle\Form;
 
 use Project\BookingBundle\Entity\Booking;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
-class BookingType extends AbstractType
+
+class BookingVisitorsType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -19,11 +17,10 @@ class BookingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
-            ->add('dayToVisit', DateType::class, array('format' => 'ddMMyyyy'))
-            ->add('typeOfTicket', ChoiceType::class, array('choices' => array('Journée entière' => true, 'Demi-journée' => false), 'expanded' => true))
-            ->add('nbTickets', IntegerType::class)
-            ;
+            ->add('visitors', CollectionType::class, array(
+                'entry_type' => VisitorType::class,
+                'entry_options' => array('label' => false)
+            ));
     }
 
     /**

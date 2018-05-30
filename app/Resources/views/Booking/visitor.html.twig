@@ -2,7 +2,7 @@
 
 {% block title %}
     {{ parent() }} - Réservation
-{% endblock%}
+{% endblock %}
 
 {% block body %}
     <h1>Réserver vos billets - Ajout des informations</h1>
@@ -11,6 +11,12 @@
     <br/>
 
     <div class="well">
-        {{ form(visitorForm) }}
+        {{ form_start(visitorForm) }}
+        {% for visitor in visitorForm %}
+            {{ form_widget(visitor) }}
+        {% endfor %}
+        <input type="submit" value="Valider">
+        {{ form_end(visitorForm) }}
+
     </div>
 {% endblock %}

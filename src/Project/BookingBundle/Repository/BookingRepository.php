@@ -1,6 +1,7 @@
 <?php
 
 namespace Project\BookingBundle\Repository;
+
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -11,22 +12,30 @@ use Doctrine\ORM\EntityRepository;
  */
 class BookingRepository extends EntityRepository
 {
-	public function getNbTickets()
-	{
-	/*	$qb = $this->createQueryBuilder('t');
-		$qb->select('COUNT(\'nbTickets\')');
+    public function findTotalTicketsByDayToVisit($dayToVisit, $limit = null)
+    {
+        //$query = $this->_em->createQuery('SELECT SUM(b.nbTickets) FROM ProjectBookingBundle:Booking b WHERE b.dayToVisit = :dayToVisit');
+        //$query->setParameter('dayToVisit', $dayToVisit);
+        $qb = $this->createQueryBuilder('b')
+            ->select('SUM(b.nbTickets)')
+            ->where('b.dayToVisit = :day')
+            ->setParameter('day', $dayToVisit);
 
-		return $qb->getQuery()->getSingleScalarResult();*/
-	}
+          $query =   $qb->getQuery();
 
-	public function getNbTicketsSold($dayToVisit)
-	{
-		/*$query = $this->_em->createQuery('SELECT t.nbTickets FROM ProjectBookingBundle:Booking t WHERE t.dayToVisit = :dayToVisit');
+        return $query->getSingleScalarResult();
+    }
+/*
+    public function findTotalJoinTicketsByDayToVisit($dayToVisit)
+    {
+        $query = $this->createQueryBuilder('b')
+            ->select('COUNT(v) as compteur')
+            ->innerJoin('b.visitors', 'v')
+            ->where('b.dayToVisit = :day')
+            ->setParameter('day', $dayToVisit)
+            ->getQuery();
 
-		$query->setParameter('dayToVisit', $dayToVisit);
-
-		$results = $query->getResult();
-
-		return $results;*/
-	}
+        return $query->getSingleScalarResult();
+    }
+*/
 }

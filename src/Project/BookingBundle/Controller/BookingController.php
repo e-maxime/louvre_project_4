@@ -36,8 +36,8 @@ class BookingController extends Controller
 
         $bookingForm->handleRequest($request);
 
-        if($bookingForm->isSubmitted() && $bookingForm->isValid())
-        {
+        if ($bookingForm->isSubmitted() && $bookingForm->isValid()) {
+
             $bookingManager->generateTickets($booking);
 
             return $this->redirectToRoute('visitor');
@@ -59,26 +59,39 @@ class BookingController extends Controller
 
         $visitorForm = $this->createForm(BookingVisitorsType::class, $booking);
 
-        $visitorForm->handleRequest($request);
-        if($visitorForm->isSubmitted() && $visitorForm->isValid())
-        {
-            return $this->redirectToRoute('payment');
-        }
-        return $this->render('Booking/visitor.html.twig', array('visitorForm' => $visitorForm->createView()));
+            $visitorForm->handleRequest($request);
+
+            if ($visitorForm->isSubmitted() && $visitorForm->isValid()) {
+
+
+                $bookingManager->computePrice($booking);
+
+                return $this->redirectToRoute('payment');
+            }
+            return $this->render('Booking/visitor.html.twig', array('visitorForm' => $visitorForm->createView()));
     }
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/payer", name="payment")
      */
-    public function paymentAction()
+    public function paymentAction(Request $request, BookingManager $bookingManager)
     {
-        /*$booking = $session->get('booking');
+        $booking = $bookingManager->getCurrentBooking();
         dump($booking);
 
         if($request->isMethod('POST')){
+
             //Gérer paiement
-        }*/
-        return $this->render('Booking/payment.html.twig');
+
+            // Si paiement OK
+              // j'enregistre ma commande en bdd (generer un numero de commande)
+              // j'envoie le mail
+              // je redirige vers page confirmation
+            // Sinon pb paiement
+               // message flash error et on laisse courir
+
+        }
+        return $this->render('Booking/payment.html.twig', array('booking' => $booking));
     }
 }

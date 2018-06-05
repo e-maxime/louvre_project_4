@@ -1,10 +1,53 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-	{{ parent() }} - Réservation
-{% endblock%}
+    {{ parent() }} - Réservation
+{% endblock %}
 	
 {% block body %}
-	<h1>Réserver vos billets - Paiement</h1>
+    <h1>Réserver vos billets - Paiement</h1>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th>Jour de visite</th>
+            <th>Adresse email</th>
+            <th>Durée de la visite</th>
+            <th>Nombre de visiteurs</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ booking.dayToVisit|date('d/m/Y') }}</td>
+            <td>{{ booking.email }}</td>
+            <td>{{ (booking.typeOfTicket)? "Journée entière" : "Demi-journée" }}</td>
+            <td>{{ booking.nbTickets }}</td>
+        </tr>
+        </tbody>
+    </table>
+<br/>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date de naissance</th>
+            <th>Pays d'origine</th>
+            <th>Tarif réduit</th>
+            <th>Prix du billet</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for visitor in booking.visitors %}
+            <tr>
+                <td>{{ visitor.name }}</td>
+                <td>{{ visitor.firstname }}</td>
+                <td>{{ visitor.birthday|date('d/m/Y') }}</td>
+                <td>{{ visitor.country }}</td>
+                <td>{{ (visitor.reducePrice)? "Oui" : "Non" }}</td>
+                <td>{{ visitor.price }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
 

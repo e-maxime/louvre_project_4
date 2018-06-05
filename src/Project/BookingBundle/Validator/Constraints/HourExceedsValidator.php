@@ -7,6 +7,10 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class HourExceedsValidator extends ConstraintValidator
 {
+    /**
+     * @param mixed $value
+     * @param Constraint $constraint
+     */
     public function validate($value, Constraint $constraint)
     {
         $date = new \DateTime('NOW', new \DateTimeZone('Europe/Paris'));

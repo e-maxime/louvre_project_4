@@ -12,11 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Visitor
 {
-    const PRICE_CHILD = 8;
-    const PRICE_NORMAL = 16;
-    const PRICE_OLD = 12;
-    const PRICE_REDUCED = 10;
-
     /**
      * @var int
      *
@@ -62,9 +57,18 @@ class Visitor
     private $reducePrice;
 
     /**
+     * @var Booking
      * @ORM\ManyToOne(targetEntity="Project\BookingBundle\Entity\Booking", inversedBy="visitors", cascade={"persist"})
      */
-    private $ticket;
+    private $booking;
+
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(type="float")
+     */
+    private $price;
 
     /**
      * Get id
@@ -199,13 +203,13 @@ class Visitor
     /**
      * Set ticket
      *
-     * @param \Project\BookingBundle\Entity\Booking $ticket
+     * @param \Project\BookingBundle\Entity\Booking $booking
      *
      * @return Visitor
      */
-    public function setTicket(Booking $ticket = null)
+    public function setBooking(Booking $booking = null)
     {
-        $this->ticket = $ticket;
+        $this->booking = $booking;
 
         return $this;
     }
@@ -215,8 +219,30 @@ class Visitor
      *
      * @return \Project\BookingBundle\Entity\Booking
      */
-    public function getTicket()
+    public function getBooking()
     {
-        return $this->ticket;
+        return $this->booking;
     }
+
+    /**
+     * @return float
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param float $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+
+    public function getAge(){
+        return $this->booking->getDayToVisit()->diff($this->birthday)->y;
+    }
+
 }

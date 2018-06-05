@@ -10,13 +10,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Booking
  *
- * @ORM\Table(name="ticket")
- * @ORM\Entity(repositoryClass="BookingRepository")
+ * @ORM\Table(name="booking")
+ * @ORM\Entity(repositoryClass="Project\BookingBundle\Repository\BookingRepository")
  * @MyAssert\HourExceeds
+ * @MyAssert\MaxTicketsSold
+ *
  */
 class Booking
 {
-
+    const PRICE_CHILD = 8;
+    const PRICE_NORMAL = 16;
+    const PRICE_OLD = 12;
+    const PRICE_REDUCED = 10;
+    const PRICE_HALF_DAY_MULTIPLICATOR = 0.5;
     const TYPE_HALF_DAY = false;
     const TYPE_FULL_DAY = true;
 
@@ -57,16 +63,23 @@ class Booking
     /**
      * @var int
      *
-     * 
+     * @ORM\Column(name="nbTickets", type="integer")
      * @Assert\NotBlank
      * @Assert\GreaterThan(0, message="Vous devez réserver au moins 1 billet.")
      */
     private $nbTickets;
 
     /**
-     * @ORM\OneToMany(targetEntity="Project\BookingBundle\Entity\Visitor", mappedBy="ticket")
+     * @var Visitor[]|ArrayCollection
+     * @ORM\OneToMany(targetEntity="Project\BookingBundle\Entity\Visitor", mappedBy="booking", cascade={"persist"})
      */
     private $visitors;
+
+    /**
+     * @var float
+     * @ORM\Column(name="totalPrice", type="float")
+     */
+    private $totalPrice;
     
     public function __construct()
     {
@@ -192,7 +205,7 @@ class Booking
     {
         $this->visitors[] = $visitor;
 
-        $visitor->setTicket($this);
+        $visitor->setBooking($this);
 
         return $this;
     }
@@ -210,10 +223,34 @@ class Booking
     /**
      * Get visitors
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Visitor[]|ArrayCollection
      */
     public function getVisitors()
     {
         return $this->visitors;
+    }
+
+    /**
+     * Set totalPrice
+     *
+     * @param float $totalPrice
+     *
+     * @return Booking
+     */
+    public function setTotalPrice($totalPrice)
+    {
+        $this->totalPrice = $totalPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get totalPrice
+     *
+     * @return float
+     */
+    public function getTotalPrice()
+    {
+        return $this->totalPrice;
     }
 }

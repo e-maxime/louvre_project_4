@@ -6,6 +6,8 @@ use Project\BookingBundle\Entity\Booking;
 use Project\BookingBundle\Form\BookingType;
 use Project\BookingBundle\Form\BookingVisitorsType;
 use Project\BookingBundle\Manager\BookingManager;
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,39 +59,47 @@ class BookingController extends Controller
         /** @var Booking $booking */
         $booking = $bookingManager->getCurrentBooking();
 
+        dump($booking);
+
         $visitorForm = $this->createForm(BookingVisitorsType::class, $booking);
 
-            $visitorForm->handleRequest($request);
+        $visitorForm->handleRequest($request);
 
-            if ($visitorForm->isSubmitted() && $visitorForm->isValid()) {
+        if ($visitorForm->isSubmitted() && $visitorForm->isValid()) {
 
 
-                $bookingManager->computePrice($booking);
+            $bookingManager->computePrice($booking);
 
-                return $this->redirectToRoute('payment');
-            }
-            return $this->render('Booking/visitor.html.twig', array('visitorForm' => $visitorForm->createView()));
+            return $this->redirectToRoute('payment');
+        }
+        return $this->render('Booking/visitor.html.twig', array('visitorForm' => $visitorForm->createView()));
     }
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/payer", name="payment")
      */
-    public function paymentAction(Request $request, BookingManager $bookingManager)
+    public function paymentAction(Request $request, BookingManager $bookingManager, Swift_Mailer $mailer)
     {
         $booking = $bookingManager->getCurrentBooking();
         dump($booking);
 
-        if($request->isMethod('POST')){
+        if ($request->isMethod('POST')) {
 
             //Gérer paiement
 
             // Si paiement OK
-              // j'enregistre ma commande en bdd (generer un numero de commande)
-              // j'envoie le mail
-              // je redirige vers page confirmation
+            // j'enregistre ma commande en bdd (generer un numero de commande)
+            // j'envoie le mail
+            $message = (new Swift_Message('Votre réservation pour le musée du Louvre'))
+                ->setFrom('reservation@museedulouvre.fr')
+                ->setTo($booking->getEmail())
+                ->setBody($this->renderView('Booking/ticket.html.twig'), 'text/html');
+
+            $mailer->send($message);
+            return $this->render('Booking/confirmed.html.twig');
             // Sinon pb paiement
-               // message flash error et on laisse courir
+            // message flash error et on laisse courir
 
         }
         return $this->render('Booking/payment.html.twig', array('booking' => $booking));

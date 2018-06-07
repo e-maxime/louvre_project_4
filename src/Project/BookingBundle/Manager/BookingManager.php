@@ -11,6 +11,7 @@ namespace Project\BookingBundle\Manager;
 use Project\BookingBundle\Entity\Booking;
 use Project\BookingBundle\Entity\Visitor;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BookingManager
 {
@@ -46,7 +47,15 @@ class BookingManager
 
     public function getCurrentBooking()
     {
-        return $this->session->get(self::SESSION_CURRENT_BOOKING);
+        $currentSession = $this->session->get(self::SESSION_CURRENT_BOOKING);
+
+        if (empty($currentSession))
+        {
+            throw new NotFoundHttpException('La page demandée n\'existe pas pour le moment car aucune donnée n\'a été envoyé');
+        }
+        else {
+            return $this->session->get(self::SESSION_CURRENT_BOOKING);
+        }
     }
 
     public function computePrice(Booking $booking)

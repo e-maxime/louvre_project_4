@@ -6,6 +6,8 @@ use Project\BookingBundle\Entity\Booking;
 use Project\BookingBundle\Form\BookingType;
 use Project\BookingBundle\Form\BookingVisitorsType;
 use Project\BookingBundle\Manager\BookingManager;
+use Stripe\Charge;
+use Stripe\Stripe;
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -87,9 +89,14 @@ class BookingController extends Controller
         if ($request->isMethod('POST')) {
 
             //Gérer paiement
+            $token = $request->request->get('stripeToken');
+
+            Stripe::setApiKey("sk_test_Gthrzae0MHHzsel9j806xSxw");
+            Charge::create(array("amount" => $booking->getTotalPrice()*100, "currency" => "usd", "source" => $token, "description" => "Commande Louvre"));
 
             // Si paiement OK
             // j'enregistre ma commande en bdd (generer un numero de commande)
+
             // j'envoie le mail
             $message = (new Swift_Message('Votre réservation pour le musée du Louvre'))
                 ->setFrom('reservation@museedulouvre.fr')
@@ -97,7 +104,10 @@ class BookingController extends Controller
                 ->setBody($this->renderView('Booking/ticket.html.twig'), 'text/html');
 
             $mailer->send($message);
-            return $this->render('Booking/confirmed.html.twig');
+
+            $this->addFlash('success', 'Paiement effectué. Un email vous a été adressé.');
+            return $this->redirectToRoute('homepage');
+
             // Sinon pb paiement
             // message flash error et on laisse courir
 

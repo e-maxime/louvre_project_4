@@ -21,21 +21,22 @@ class BookingRepository extends EntityRepository
             ->where('b.dayToVisit = :day')
             ->setParameter('day', $dayToVisit);
 
-          $query =   $qb->getQuery();
+        $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
     }
-/*
-    public function findTotalJoinTicketsByDayToVisit($dayToVisit)
-    {
-        $query = $this->createQueryBuilder('b')
-            ->select('COUNT(v) as compteur')
-            ->innerJoin('b.visitors', 'v')
-            ->where('b.dayToVisit = :day')
-            ->setParameter('day', $dayToVisit)
-            ->getQuery();
 
-        return $query->getSingleScalarResult();
-    }
-*/
+    /*
+        public function findTotalJoinTicketsByDayToVisit($dayToVisit)
+        {
+            $query = $this->createQueryBuilder('b')
+                ->select('COUNT(v) as compteur')
+                ->innerJoin('b.visitors', 'v')
+                ->where('b.dayToVisit = :day')
+                ->setParameter('day', $dayToVisit)
+                ->getQuery();
+
+            return $query->getSingleScalarResult();
+        }
+    */
 }

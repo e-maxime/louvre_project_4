@@ -49,10 +49,26 @@
         {% endfor %}
         </tbody>
     </table>
-    <form method="post">
-        <div style="text-align: center">
-            <input type="submit" value="Payer" class="btn btn-success" />
+
+    <div class="nav-space-checkout">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <form action="" method="POST">
+                        <script
+                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="pk_test_jBIw1J9QqGPLNa9kMguLMrTG"
+                                data-amount="{{ booking.totalPrice * 100 }}"
+                                data-name="Réservation"
+                                data-description="Musée du Louvre"
+                                data-image="{{ asset('images/pay.png') }}"
+                                data-locale="auto">
+                        </script>
+                    </form>
+                </div>
+            </div>
         </div>
-    </form>
+    </div>
+
 {% endblock %}
 

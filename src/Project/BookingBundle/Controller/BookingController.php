@@ -88,13 +88,13 @@ class BookingController extends Controller
 
         if ($request->isMethod('POST')) {
 
-            //Gérer paiement
             $token = $request->request->get('stripeToken');
 
-            Stripe::setApiKey("sk_test_Gthrzae0MHHzsel9j806xSxw");
+            Stripe::setApiKey($this->getParameter('stripe_secret_key'));
             Charge::create(array("amount" => $booking->getTotalPrice()*100, "currency" => "usd", "source" => $token, "description" => "Commande Louvre"));
 
             // Si paiement OK
+            $this->addFlash('success', 'Paiement effectué. Un email vous a été adressé.');
             // j'enregistre ma commande en bdd (generer un numero de commande)
 
             // j'envoie le mail
@@ -105,13 +105,13 @@ class BookingController extends Controller
 
             $mailer->send($message);
 
-            $this->addFlash('success', 'Paiement effectué. Un email vous a été adressé.');
             return $this->redirectToRoute('homepage');
-
-            // Sinon pb paiement
-            // message flash error et on laisse courir
-
         }
-        return $this->render('Booking/payment.html.twig', array('booking' => $booking));
+        else {
+            $this->addFlash('error', 'Une erreur est survenu lors de l\'opération');
+            $this->redirectToRoute('payment');
+        }
+
+        return $this->render('Booking/payment.html.twig', array('booking' => $booking, 'stripe_public_key' => $this->getParameter('stripe_public_key')));
     }
 }

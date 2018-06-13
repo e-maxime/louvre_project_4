@@ -6,6 +6,8 @@
 
 {% block body %}
 
-    <p>Votre réservation à bien été prise en compte. Un email de confirmation vous a été adressé.</p>
+    <div class="alert alert-success">
+        Votre réservation a bien été prise en compte. Un email de confirmation vous a été adressé à l'adresse <strong>{{ booking.email }}</strong>
+    </div>
 
 {% endblock %}

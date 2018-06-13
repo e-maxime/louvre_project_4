@@ -25,6 +25,14 @@
       </div>
 
     <div class="container">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+				<div class="alert alert-{{ label }}" role="alert">
+					{{ message }}
+				</div>
+            {% endfor %}
+        {% endfor %}
+
     	{% block body  %}
 			<p>
 				Bienvenue sur le site de réservation de billet pour le musée du Louvre. Acheter vos billets directement en ligne et gagner du temps sur votre visite !

@@ -2,6 +2,7 @@
 
 namespace Project\BookingBundle\Form;
 
+
 use Project\BookingBundle\Entity\Booking;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;

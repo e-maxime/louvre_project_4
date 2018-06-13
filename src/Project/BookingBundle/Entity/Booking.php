@@ -18,6 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Booking
 {
+    const PRICE_FREE = 0;
     const PRICE_CHILD = 8;
     const PRICE_NORMAL = 16;
     const PRICE_OLD = 12;

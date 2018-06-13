@@ -1,3 +1,27 @@
-<h3>Confirmation de réservation</h3>
-<strong>M. xxx</strong>
-<p>Voici votre réservation pour le musée du Louvre.</p>
+<h3>Confirmation de réservation - Musée du Louvre</h3>
+
+<p>Votre visite du {{ booking.dayToVisit|date('d/m/Y') }}</p>
+<p>Type de la visite : {{ (booking.typeOfTicket)? "Journée entière" : "Demi_journée (à partir de 14h)" }}</p>
+<p>Nombre de visiteurs : {{ booking.nbTickets }}</p>
+<p>Prix de la commande : {{ booking.totalPrice }} €</p>
+
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Date de naissance</th>
+        <th>Tarif réduit</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for visitor in booking.visitors %}
+        <tr>
+            <td>{{ visitor.name }}</td>
+            <td>{{ visitor.firstname }}</td>
+            <td>{{ visitor.birthday|date('d/m/Y') }}</td>
+            <td>{{ (visitor.reducePrice)? "Oui" : "Non" }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

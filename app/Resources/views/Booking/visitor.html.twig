@@ -9,10 +9,9 @@
     <br/>
     <h2>Billets : </h2>
     <br/>
-
     <div class="well">
         {{ form_start(visitorForm) }}
-        {% for visitor in visitorForm %}
+        {% for visitor in visitorForm.visitors %}
             {{ form_widget(visitor) }}
         {% endfor %}
         <input type="submit" value="Valider" class="btn btn-primary">

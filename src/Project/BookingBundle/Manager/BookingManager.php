@@ -16,6 +16,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class BookingManager
 {
     const SESSION_CURRENT_BOOKING = "bookingData";
+    const AGE_SENIOR = 60;
+    const AGE_TEENAGER = 12;
+    const AGE_KIDS = 4;
 
 
     /**
@@ -24,6 +27,10 @@ class BookingManager
     private $session;
 
 
+    /**
+     * BookingManager constructor.
+     * @param SessionInterface $session
+     */
     public function __construct(SessionInterface $session)
     {
         $this->session = $session;
@@ -49,13 +56,18 @@ class BookingManager
     {
         $currentSession = $this->session->get(self::SESSION_CURRENT_BOOKING);
 
-        if (empty($currentSession))
+        if (!$currentSession || $currentSession->getEmail() == null)
         {
             throw new NotFoundHttpException('La page demandée n\'existe pas pour le moment car aucune donnée n\'a été envoyé');
         }
         else {
-            return $this->session->get(self::SESSION_CURRENT_BOOKING);
+            return $currentSession;
         }
+    }
+
+    public function removeCurrentBooking()
+    {
+        return $this->session->remove(self::SESSION_CURRENT_BOOKING);
     }
 
     public function computePrice(Booking $booking)
@@ -63,14 +75,14 @@ class BookingManager
         $priceTotal = 0;
         foreach ($booking->getVisitors() as $visitor) {
             $age = $visitor->getAge();
-            if ($age < 4) {
-                $price = 0;
-            } else if ($age < 12) {
-                $price = 8;
-            } else if ($age < 60) {
-                $price = 16;
+            if ($age < BookingManager::AGE_KIDS) {
+                $price = Booking::PRICE_FREE;
+            } else if ($age < BookingManager::AGE_TEENAGER) {
+                $price = Booking::PRICE_CHILD;
+            } else if ($age < BookingManager::AGE_SENIOR) {
+                $price = Booking::PRICE_NORMAL;
             } else {
-                $price = 12;
+                $price = Booking::PRICE_OLD;
             }
 
             if($visitor->getReducePrice()  && $price > Booking::PRICE_REDUCED){
@@ -87,6 +99,18 @@ class BookingManager
             $priceTotal += $visitor->getPrice();
         }
         $booking->setTotalPrice($priceTotal);
+    }
+
+    public function executePaiement($request)
+    {
+        //utilise le service PAiement et fait la charge
+        //si paiement ok
+          // generer un numero de commande
+         //enregistre dans la base
+          // envoie le mail
+         // return true
+        //sinon
+           // return false
     }
 
 }

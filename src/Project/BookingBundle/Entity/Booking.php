@@ -48,8 +48,8 @@ class Booking
      *
      * @ORM\Column(name="dayToVisit", type="date")
      * @Assert\GreaterThanOrEqual("today", message="Vous ne pouvez pas réservé de billets pour un jour passé.")
-     * @Assert\NotEqualTo("tuesday", message="Le musée est fermé le Mardi, le Dimanche, le 1er Mai, le 1er Novembre et le 25 Décembre.")
-     * @Assert\NotEqualTo("sunday", message="Le musée est fermé le Mardi, le Dimanche, le 1er Mai, le 1er Novembre et le 25 Décembre.")
+     * @Assert\NotEqualTo("tuesday", message="Le musée est fermé le Mardi.")
+     * @Assert\NotEqualTo("sunday", message="Le musée est fermé le Dimanche.")
      * @MyAssert\Wrongday
      */
     private $dayToVisit;

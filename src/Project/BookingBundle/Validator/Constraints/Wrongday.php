@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class Wrongday extends Constraint
 {
-	public $message = "Le musée est fermé le Mardi, le Dimanche, le 1er Mai, le 1er Novembre et le 25 Décembre.";
+	public $message = "Le musée est fermé le ce jour.";
 
 	public function validatedBy()
 	{

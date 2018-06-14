@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e0361ace-486c-41dd-bac2-c10d1b6c9bae" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Project/BookingBundle/Entity/Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Project/BookingBundle/Entity/Booking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Project/BookingBundle/Validator/Constraints/Wrongday.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Project/BookingBundle/Validator/Constraints/Wrongday.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Project/BookingBundle/Validator/Constraints/WrongdayValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Project/BookingBundle/Validator/Constraints/WrongdayValidator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Project/BookingBundle/Entity/Visitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Project/BookingBundle/Entity/Visitor.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,29 +34,44 @@
       <file leaf-file-name="BookingController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Controller/BookingController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1380">
-              <caret line="135" column="48" selection-start-line="135" selection-start-column="48" selection-end-line="135" selection-end-column="48" />
+            <state relative-caret-position="428">
+              <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WrongdayValidator.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Validator/Constraints/WrongdayValidator.php">
+      <file leaf-file-name="BookingManager.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Manager/BookingManager.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="18" column="51" selection-start-line="18" selection-start-column="51" selection-end-line="18" selection-end-column="51" />
+            <state relative-caret-position="1819">
+              <caret line="112" column="26" selection-start-line="112" selection-start-column="26" selection-end-line="112" selection-end-column="26" />
               <folding>
-                <element signature="e#62#105#0#PHP" expanded="true" />
+                <element signature="e#132#173#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Wrongday.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Validator/Constraints/Wrongday.php">
+      <file leaf-file-name="Booking.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Entity/Booking.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+            <state relative-caret-position="357">
+              <caret line="123" column="5" lean-forward="true" selection-start-line="123" selection-start-column="5" selection-end-line="123" selection-end-column="5" />
+              <folding>
+                <element signature="e#48#80#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Visitor.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Entity/Visitor.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="884">
+              <caret line="52" column="21" lean-forward="true" selection-start-line="52" selection-start-column="21" selection-end-line="52" selection-end-column="21" />
+              <folding>
+                <element signature="e#48#80#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -104,7 +117,6 @@
         <option value="$PROJECT_DIR$/src/Project/BookingBundle/Validator/Constraints/HourExceeds.php" />
         <option value="$PROJECT_DIR$/src/Project/BookingBundle/Validator/Constraints/MaxTicketsSold.php" />
         <option value="$PROJECT_DIR$/src/Project/BookingBundle/Validator/Constraints/MaxTicketsSoldValidator.php" />
-        <option value="$PROJECT_DIR$/src/Project/BookingBundle/Entity/Visitor.php" />
         <option value="$PROJECT_DIR$/src/Project/BookingBundle/Repository/BookingRepository.php" />
         <option value="$PROJECT_DIR$/app/config/parameters.yml" />
         <option value="$PROJECT_DIR$/app/config/config_dev.yml" />
@@ -119,9 +131,10 @@
         <option value="$PROJECT_DIR$/src/Project/BookingBundle/Controller/BookingController.php" />
         <option value="$PROJECT_DIR$/src/Project/BookingBundle/Manager/BookingManager.php" />
         <option value="$PROJECT_DIR$/src/Project/BookingBundle/Validator/Constraints/HourExceedsValidator.php" />
-        <option value="$PROJECT_DIR$/src/Project/BookingBundle/Entity/Booking.php" />
         <option value="$PROJECT_DIR$/src/Project/BookingBundle/Validator/Constraints/Wrongday.php" />
         <option value="$PROJECT_DIR$/src/Project/BookingBundle/Validator/Constraints/WrongdayValidator.php" />
+        <option value="$PROJECT_DIR$/src/Project/BookingBundle/Entity/Visitor.php" />
+        <option value="$PROJECT_DIR$/src/Project/BookingBundle/Entity/Booking.php" />
       </list>
     </option>
   </component>
@@ -225,31 +238,6 @@
               <item name="Project" type="462c0819:PsiDirectoryNode" />
               <item name="BookingBundle" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Projet_4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Projet_4" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
-              <item name="BookingBundle" type="462c0819:PsiDirectoryNode" />
-              <item name="Entity" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Projet_4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Projet_4" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
-              <item name="BookingBundle" type="462c0819:PsiDirectoryNode" />
-              <item name="Validator" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Projet_4" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Projet_4" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
-              <item name="BookingBundle" type="462c0819:PsiDirectoryNode" />
-              <item name="Validator" type="462c0819:PsiDirectoryNode" />
-              <item name="Constraints" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -308,12 +296,12 @@
       <workItem from="1528876860794" duration="4789000" />
       <workItem from="1528901124891" duration="3965000" />
       <workItem from="1528905379136" duration="978000" />
-      <workItem from="1528958059070" duration="4967000" />
+      <workItem from="1528958059070" duration="6758000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="94174000" />
+    <option name="totallyTimeSpent" value="95965000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -328,7 +316,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.498452" visible="true" weight="0.18443497" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.498452" visible="true" weight="0.18443497" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.23382045" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5002664" side_tool="true" weight="0.32916668" />
@@ -337,7 +325,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4983845" weight="0.32941177" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="right" id="Structure" order="5" sideWeight="0.501548" side_tool="true" visible="true" weight="0.073027715" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.49973363" visible="true" weight="0.2962963" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49973363" weight="0.2962963" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -478,13 +466,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/doctrine/orm/lib/Doctrine/ORM/AbstractQuery.php" />
-    <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Entity/Visitor.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3690">
-          <caret line="246" selection-start-line="246" selection-end-line="246" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/Booking/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -627,30 +608,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Manager/BookingManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
-          <caret line="112" column="26" selection-start-line="112" selection-start-column="26" selection-end-line="112" selection-end-column="26" />
-          <folding>
-            <element signature="e#132#173#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Entity/Booking.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="54" column="24" lean-forward="true" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Controller/BookingController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1380">
-          <caret line="135" column="48" selection-start-line="135" selection-start-column="48" selection-end-line="135" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Validator/Constraints/Wrongday.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -660,10 +617,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Validator/Constraints/WrongdayValidator.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="18" column="51" selection-start-line="18" selection-start-column="51" selection-end-line="18" selection-end-column="51" />
+        <state relative-caret-position="343">
+          <caret line="21" column="54" lean-forward="true" selection-start-line="21" selection-start-column="54" selection-end-line="21" selection-end-column="54" />
           <folding>
             <element signature="e#62#105#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Entity/Visitor.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="884">
+          <caret line="52" column="21" lean-forward="true" selection-start-line="52" selection-start-column="21" selection-end-line="52" selection-end-column="21" />
+          <folding>
+            <element signature="e#48#80#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Controller/BookingController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Manager/BookingManager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1819">
+          <caret line="112" column="26" selection-start-line="112" selection-start-column="26" selection-end-line="112" selection-end-column="26" />
+          <folding>
+            <element signature="e#132#173#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Project/BookingBundle/Entity/Booking.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="123" column="5" lean-forward="true" selection-start-line="123" selection-start-column="5" selection-end-line="123" selection-end-column="5" />
+          <folding>
+            <element signature="e#48#80#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

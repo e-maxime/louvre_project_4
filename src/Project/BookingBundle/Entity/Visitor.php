@@ -3,6 +3,7 @@
 namespace Project\BookingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Visitor
@@ -25,6 +26,7 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -32,6 +34,7 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $firstName;
 

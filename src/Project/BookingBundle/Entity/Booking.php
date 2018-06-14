@@ -65,7 +65,7 @@ class Booking
      * @var int
      *
      * @ORM\Column(name="nbTickets", type="integer")
-     * @Assert\NotBlank
+     * @Assert\NotBlank()
      * @Assert\GreaterThan(0, message="Vous devez réserver au moins 1 billet.")
      */
     private $nbTickets;

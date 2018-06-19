@@ -8,8 +8,11 @@
 
 namespace Project\BookingBundle\Manager;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Project\BookingBundle\Entity\Booking;
 use Project\BookingBundle\Entity\Visitor;
+use Project\BookingBundle\Service\MailSender;
+use Project\BookingBundle\Service\Payment;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -25,18 +28,23 @@ class BookingManager
      * @var SessionInterface
      */
     private $session;
+    private $entityManager;
 
 
     /**
      * BookingManager constructor.
      * @param SessionInterface $session
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(SessionInterface $session)
+    public function __construct(SessionInterface $session, EntityManagerInterface $entityManager)
     {
         $this->session = $session;
+        $this->entityManager = $entityManager;
     }
 
-
+    /**
+     * @return Booking
+     */
     public function init()
     {
         $booking = new Booking();
@@ -45,6 +53,9 @@ class BookingManager
 
     }
 
+    /**
+     * @param Booking $booking
+     */
     public function generateTickets(Booking $booking)
     {
         for ($i = 0; $i < $booking->getNbTickets(); $i++) {
@@ -52,6 +63,9 @@ class BookingManager
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function getCurrentBooking()
     {
         $currentSession = $this->session->get(self::SESSION_CURRENT_BOOKING);
@@ -65,11 +79,17 @@ class BookingManager
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function removeCurrentBooking()
     {
         return $this->session->remove(self::SESSION_CURRENT_BOOKING);
     }
 
+    /**
+     * @param Booking $booking
+     */
     public function computePrice(Booking $booking)
     {
         $priceTotal = 0;
@@ -101,16 +121,31 @@ class BookingManager
         $booking->setTotalPrice($priceTotal);
     }
 
-    public function executePaiement($request)
+    /**
+     * @param $request
+     * @param Payment $payment
+     * @param MailSender $sendEmail
+     * @return bool
+     * @throws \Twig\Error\Error
+     */
+    public function executePayment($request, Payment $payment, MailSender $sendEmail)
     {
-        //utilise le service PAiement et fait la charge
-        //si paiement ok
-          // generer un numero de commande
-         //enregistre dans la base
-          // envoie le mail
-         // return true
-        //sinon
-           // return false
-    }
+        $token = $request->request->get('stripeToken');
+        $payment->getPayment($token);
 
+        if($payment){
+            // generer un numero de commande
+
+            $this->entityManager->persist($this->getCurrentBooking());
+            $this->entityManager->flush();
+
+            $sendEmail->sendEmail();
+
+            return true;
+        }
+        else
+        {
+              return false;
+        }
+    }
 }

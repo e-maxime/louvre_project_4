@@ -6,11 +6,8 @@ use Project\BookingBundle\Entity\Booking;
 use Project\BookingBundle\Form\BookingType;
 use Project\BookingBundle\Form\BookingVisitorsType;
 use Project\BookingBundle\Manager\BookingManager;
-use Stripe\Charge;
-use Stripe\Error\Card;
-use Stripe\Stripe;
-use Swift_Mailer;
-use Swift_Message;
+use Project\BookingBundle\Service\MailSender;
+use Project\BookingBundle\Service\Payment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -82,51 +79,35 @@ class BookingController extends Controller
     /**
      * @param Request $request
      * @param BookingManager $bookingManager
-     * @param Swift_Mailer $mailer
+     * @param Payment $payment
+     * @param MailSender $sendEmail
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Twig\Error\Error
      * @Route("/payer", name="payment")
      */
-    public function paymentAction(Request $request, BookingManager $bookingManager, Swift_Mailer $mailer)
+    public function paymentAction(Request $request, BookingManager $bookingManager, Payment $payment, MailSender $sendEmail)
     {
         $booking = $bookingManager->getCurrentBooking();
         dump($booking);
 
         if ($request->isMethod('POST')) {
 
+            $executePayment = $bookingManager->executePayment($request, $payment, $sendEmail);
 
-//           if( $bookingManager->executePaiement($request)){
-//
-//           }else{
-//
-//           }
+           if($executePayment){
+               return $this->redirectToRoute('checked');
+           }
 
-            $token = $request->request->get('stripeToken');
-
-            Stripe::setApiKey($this->getParameter('stripe_secret_key'));
-            try {
-                Charge::create(array("amount" => $booking->getTotalPrice() * 100, "currency" => "usd", "source" => $token, "description" => "Commande Louvre"));
-            }catch(Card $e){
-                $this->addFlash('warning', 'Une erreur est survenu lors de l\'opération');
-                $this->redirectToRoute('payment');
-            }
-
-            // j'enregistre ma commande en bdd (generer un numero de commande)
-
-            // j'envoie le mail
-            $message = (new Swift_Message('Votre réservation pour le musée du Louvre'))
-                ->setFrom('reservation@museedulouvre.fr')
-                ->setTo($booking->getEmail())
-                ->setBody($this->renderView('Booking/ticket.html.twig', array('booking' => $booking)), 'text/html');
-
-            $mailer->send($message);
-
-            return $this->redirectToRoute('checked');
+           else{
+                $this->addFlash('warning', 'Une erreur est survenue lors de l\'opération.');
+                return $this->redirectToRoute('payment');
+           }
         }
-
         return $this->render('Booking/payment.html.twig', array('booking' => $booking, 'stripe_public_key' => $this->getParameter('stripe_public_key')));
     }
 
     /**
+     * @param BookingManager $bookingManager
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/confirmation_commande", name="checked")
      */

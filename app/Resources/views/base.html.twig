@@ -5,24 +5,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{% block title %}Musée du Louvre{% endblock %}</title>
 	{% block stylesheets %}
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		{#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">#}
+		<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+		<link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 	{% endblock %}
 </head>
 
 <body>
-	<nav class="site-header sticky-top py-1" style="background-color: #262626;">
-		<div class="container" style="padding-top: 10px; padding-bottom: 10px;">
-			{% block menu %}
-				{{ include("Booking/menu.html.twig") }}
-			{% endblock %}
-		</div>
-	</nav>
-	
-	<div class="jumbotron" style="background-color: #d9d9d9;">
-        <div class="container">
-          <h1 class="display-3">Musée du Louvre</h1>
-        </div>
-      </div>
+	<div class="banner">
+          <h1>Musée du <br/>Louvre</h1>
+	</div>
+
+    {% block menu %}
+        {% include ':Booking:menu.html.twig' %}
+    {% endblock %}
+
 
     <div class="container">
         {% for label, messages in app.flashes %}

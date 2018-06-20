@@ -29,3 +29,7 @@ services:
         resource: '../../src/Project/BookingBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
+
+    Project\BookingBundle\Service\Payment:
+        arguments:
+            $stripeSecretKey: '%stripe_secret_key%'

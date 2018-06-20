@@ -85,8 +85,8 @@ class Booking
     private $totalPrice;
 
     /**
-     * @var string
-     * @ORM\Column(name="orderId", type="string")
+     * @var int
+     * @ORM\Column(name="orderId", type="integer")
      *
      */
     private $orderId;
@@ -262,29 +262,5 @@ class Booking
     public function getTotalPrice()
     {
         return $this->totalPrice;
-    }
-
-    /**
-     * Set orderId
-     *
-     * @param string $orderId
-     *
-     * @return Booking
-     */
-    public function setOrderId($orderId)
-    {
-        $this->orderId = $orderId;
-
-        return $this;
-    }
-
-    /**
-     * Get orderId
-     *
-     * @return string
-     */
-    public function getOrderId()
-    {
-        return $this->orderId;
     }
 }

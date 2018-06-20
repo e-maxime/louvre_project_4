@@ -9,6 +9,8 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class MaxTicketsSoldValidator extends ConstraintValidator
 {
+    const MAX_TICKETS_SOLD = 1000;
+
     private $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
@@ -18,7 +20,7 @@ class MaxTicketsSoldValidator extends ConstraintValidator
     }
 
     /**
-     * @param mixed $value
+     * @param $booking
      * @param Constraint $constraint
      */
     public function validate($booking, Constraint $constraint)
@@ -29,7 +31,7 @@ class MaxTicketsSoldValidator extends ConstraintValidator
 
         $nbCurrentTickets = $nbTickets + $booking->getNbTickets();
 
-        if ($nbCurrentTickets >= 10) {
+        if ($nbCurrentTickets >= self::MAX_TICKETS_SOLD) {
             $this->context->addViolation($constraint->message);
         }
     }

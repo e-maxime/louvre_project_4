@@ -57,7 +57,7 @@ class BookingController extends Controller
     public function visitorAction(Request $request, BookingManager $bookingManager)
     {
         /** @var Booking $booking */
-        $booking = $bookingManager->getCurrentBooking();
+        $booking = $bookingManager->getCurrentBooking(array('Default', 'step1'));
 
 
         dump($booking);
@@ -79,29 +79,26 @@ class BookingController extends Controller
     /**
      * @param Request $request
      * @param BookingManager $bookingManager
-     * @param Payment $payment
-     * @param MailSender $sendEmail
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Twig\Error\Error
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      * @Route("/payer", name="payment")
      */
-    public function paymentAction(Request $request, BookingManager $bookingManager, Payment $payment, MailSender $sendEmail)
+    public function paymentAction(Request $request, BookingManager $bookingManager)
     {
-        $booking = $bookingManager->getCurrentBooking();
-        dump($booking);
+        $booking = $bookingManager->getCurrentBooking(array('Default', 'step2'));
 
         if ($request->isMethod('POST')) {
 
-            $executePayment = $bookingManager->executePayment($request, $payment, $sendEmail);
+            $executePayment = $bookingManager->executePayment($booking, $request);
 
-           if($executePayment){
-               return $this->redirectToRoute('checked');
-           }
-
-           else{
+            if ($executePayment) {
+                return $this->redirectToRoute('checked');
+            } else {
                 $this->addFlash('warning', 'Une erreur est survenue lors de l\'opération.');
                 return $this->redirectToRoute('payment');
-           }
+            }
         }
         return $this->render('Booking/payment.html.twig', array('booking' => $booking, 'stripe_public_key' => $this->getParameter('stripe_public_key')));
     }

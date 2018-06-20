@@ -10,12 +10,53 @@
     <h2>Billets : </h2>
     <br/>
     <div class="well">
-        {{ form_start(visitorForm) }}
+    {{ form_start(visitorForm) }}
         {% for visitor in visitorForm.visitors %}
-            {{ form_widget(visitor) }}
+            <div class="form-group">
+                {{ form_label(visitor.name, "Nom : ", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                {{ form_errors(visitor.name) }}
+                <div class="col-sm-4">
+                    {{ form_widget(visitor.name, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <br />
+
+                {{ form_label(visitor.firstName, "Prénom : ", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                {{ form_errors(visitor.firstName) }}
+                <div class="col-sm-4">
+                    {{ form_widget(visitor.firstName, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <br />
+
+                {{ form_label(visitor.birthday, "Date de naissance :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                {{ form_errors(visitor.birthday) }}
+                <div class="col-sm-5">
+                    {{ form_widget(visitor.birthday) }}
+                </div>
+
+                <br/>
+
+                {{ form_label(visitor.country, "Pays d'origine : ", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                {{ form_errors(visitor.country) }}
+                <div class="col-sm-5">
+                    {{ form_widget(visitor.country) }}
+                </div>
+
+                <br/>
+
+                {{ form_label(visitor.reducePrice, "Tarif réduit", {'label_attr': {'class': 'col-sm-2 control label'}}) }}
+
+                {{ form_errors(visitor.reducePrice) }}
+                <div class="col-sm-3">
+                    <span title="Un justificatif(carte d'étudiant, employé du musée ou du Ministère de la Culture, militaire, ...) vous sera demandé à l'entrée."> {{  form_widget(visitor.reducePrice) }} </span>
+                </div>
+            </div>
+            <hr>
         {% endfor %}
         <input type="submit" value="Valider" class="btn btn-primary">
         {{ form_end(visitorForm) }}
+
     </div>
 
 

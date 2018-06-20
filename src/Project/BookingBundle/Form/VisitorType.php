@@ -24,7 +24,7 @@ class VisitorType extends AbstractType
             ->add('firstName', TextType::class, array('label' => 'Prénom :'))
             ->add('birthday', BirthdayType::class, array('label' => 'Date de naissance :', 'format' => 'ddMMyyyy'))
             ->add('country', CountryType::class, array('label' => 'Pays d\'origine :', 'preferred_choices' => 'France'))
-            ->add('reducePrice', CheckboxType::class, array('label' => 'Tarif réduit :', 'required' => false))
+            ->add('reducePrice', CheckboxType::class, array('label' => 'Tarif réduit *', 'required' => false))
             ;
     }
 

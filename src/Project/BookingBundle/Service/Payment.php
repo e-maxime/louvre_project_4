@@ -9,34 +9,49 @@
 namespace Project\BookingBundle\Service;
 
 
-use Project\BookingBundle\Manager\BookingManager;
+use Project\BookingBundle\Entity\Booking;
 use Stripe\Charge;
+use Stripe\Error\Card;
 use Stripe\Stripe;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 
+/**
+ * Class Payment
+ * @package Project\BookingBundle\Service
+ */
 class Payment
 {
-    private $container;
-    private $bookingManager;
-    private $session;
+    /**
+     * @var
+     */
+    private $stripeSecretKey;
 
-    public function __construct(ContainerInterface $container, BookingManager $bookingManager, SessionInterface $session)
+    /**
+     * Payment constructor.
+     * @param $stripeSecretKey
+     */
+    public function __construct($stripeSecretKey)
     {
-        $this->container = $container;
-        $this->bookingManager = $bookingManager;
-        $this->session = $session;
+        $this->stripeSecretKey = $stripeSecretKey;
     }
 
     /**
-     * @param $token
+     * @param Request $request
+     * @param Booking $booking
+     *
+     * @return bool
      */
-    public function getPayment($token)
+    public function getPayment(Request $request,Booking $booking)
     {
-        $booking = $this->bookingManager->getCurrentBooking();
-
-        Stripe::setApiKey($this->container->getParameter('stripe_secret_key'));
-        Charge::create(array("amount" => $booking->getTotalPrice() * 100, "currency" => "usd", "source" => $token, "description" => "Commande Louvre"));
+        try{
+            Stripe::setApiKey($this->stripeSecretKey);
+            $charge = Charge::create(array("amount" => $booking->getTotalPrice() * 100, "currency" => "eur", "source" => $request->get('stripeToken'), "description" => "Commande Louvre"));
+            $orderId = $charge->id;
+            $booking->setOrderId($orderId);
+        }catch(Card $e){
+            return false;
+        }
+        return true;
     }
 }

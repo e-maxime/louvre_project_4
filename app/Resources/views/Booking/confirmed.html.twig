@@ -7,7 +7,9 @@
 {% block body %}
 
     <div class="alert alert-success">
-        Votre réservation a bien été prise en compte. Un email de confirmation vous a été adressé à l'adresse <strong>{{ booking.email }}</strong>
+        <h4>Commande n°{{ booking.orderId }}</h4>
+        Votre réservation a bien été prise en compte. Un email de confirmation vous a été adressé à l'adresse <strong>{{ booking.email }}</strong>.<br/>
+        Pour toute question, n'hésitez pas à contacter notre service client par <a href="#">mail</a> ou par téléphone au 01.22.33.44.55.
     </div>
 
 {% endblock %}

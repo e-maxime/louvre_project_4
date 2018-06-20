@@ -13,8 +13,10 @@ use Project\BookingBundle\Entity\Booking;
 use Project\BookingBundle\Entity\Visitor;
 use Project\BookingBundle\Service\MailSender;
 use Project\BookingBundle\Service\Payment;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class BookingManager
 {
@@ -29,17 +31,35 @@ class BookingManager
      */
     private $session;
     private $entityManager;
+    /**
+     * @var Payment
+     */
+    private $payment;
+    /**
+     * @var MailSender
+     */
+    private $mailSender;
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
 
 
     /**
      * BookingManager constructor.
      * @param SessionInterface $session
      * @param EntityManagerInterface $entityManager
+     * @param Payment $payment
+     * @param MailSender $mailSender
+     * @param ValidatorInterface $validator
      */
-    public function __construct(SessionInterface $session, EntityManagerInterface $entityManager)
+    public function __construct(SessionInterface $session, EntityManagerInterface $entityManager, Payment $payment, MailSender $mailSender, ValidatorInterface $validator)
     {
         $this->session = $session;
         $this->entityManager = $entityManager;
+        $this->payment = $payment;
+        $this->mailSender = $mailSender;
+        $this->validator = $validator;
     }
 
     /**
@@ -64,13 +84,16 @@ class BookingManager
     }
 
     /**
+     * @param array $step
      * @return mixed
      */
-    public function getCurrentBooking()
+    public function getCurrentBooking($step = [])
     {
         $currentSession = $this->session->get(self::SESSION_CURRENT_BOOKING);
 
-        if (!$currentSession || $currentSession->getEmail() == null)
+        //$this->validator->validate($booking,null,$step);
+
+        if (!($this->validator->validate($currentSession,null, $step)) )
         {
             throw new NotFoundHttpException('La page demandée n\'existe pas pour le moment car aucune donnée n\'a été envoyé');
         }
@@ -122,24 +145,22 @@ class BookingManager
     }
 
     /**
-     * @param $request
-     * @param Payment $payment
-     * @param MailSender $sendEmail
+     * @param Booking $booking
+     * @param Request $request
      * @return bool
-     * @throws \Twig\Error\Error
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function executePayment($request, Payment $payment, MailSender $sendEmail)
+    public function executePayment(Booking $booking,Request $request)
     {
-        $token = $request->request->get('stripeToken');
-        $payment->getPayment($token);
+        $transactionId = $this->payment->getPayment($request, $booking);
 
-        if($payment){
-            // generer un numero de commande
-
+        if($transactionId !== false){
             $this->entityManager->persist($this->getCurrentBooking());
             $this->entityManager->flush();
 
-            $sendEmail->sendEmail();
+            $this->mailSender->sendBookingConfirmation($booking);
 
             return true;
         }

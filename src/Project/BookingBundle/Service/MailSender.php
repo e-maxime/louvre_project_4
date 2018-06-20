@@ -8,35 +8,50 @@
 
 namespace Project\BookingBundle\Service;
 
-use Project\BookingBundle\Manager\BookingManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Project\BookingBundle\Entity\Booking;
 
 
+/**
+ * Class MailSender
+ * @package Project\BookingBundle\Service
+ */
 class MailSender
 {
+    /**
+     * @var \Swift_Mailer
+     */
     private $mailer;
-    private $container;
-    private $bookingManager;
 
-    public function __construct(\Swift_Mailer $mailer, BookingManager $bookingManager, ContainerInterface $container)
+    /**
+     * @var \Twig_Environment
+     */
+    private $twig;
+
+    /**
+     * MailSender constructor.
+     * @param \Swift_Mailer $mailer
+     * @param \Twig_Environment $twig
+     */
+    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig)
     {
         $this->mailer = $mailer;
-        $this->container = $container;
-        $this->bookingManager = $bookingManager;
+        $this->twig = $twig;
     }
 
     /**
+     * @param Booking $booking
      * @return int
-     * @throws \Twig\Error\Error
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function sendEmail()
+    public function sendBookingConfirmation(Booking $booking)
     {
-        $booking = $this->bookingManager->getCurrentBooking();
 
         $message = (new \Swift_Message('Votre réservation pour le musée du Louvre'))
             ->setFrom('reservation@museedulouvre.fr')
             ->setTo($booking->getEmail())
-            ->setBody($this->container->get('templating')->render('Booking/ticket.html.twig', array('booking' => $booking)), 'text/html');
+            ->setBody($this->twig->render('Booking/ticket.html.twig', array('booking' => $booking)), 'text/html');
 
         return $this->mailer->send($message);
     }

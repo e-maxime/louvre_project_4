@@ -8,10 +8,9 @@ class WrongdayValidator extends ConstraintValidator
 {
 	public function validate($value, Constraint $constraint)
 	{
-	    $dateSelected = date_format($value, 'Y:m:d');
-	    $timeDateSelected = time($dateSelected);
+	    $dateSelected = $value->format('d-m-Y');
 
-	    $year = intval(date('Y'));
+	    $year = $value->format('Y');
 
         $easterDate  = easter_date($year);
         $easterDay   = date('j', $easterDate);
@@ -35,37 +34,16 @@ class WrongdayValidator extends ConstraintValidator
             mktime(0, 0, 0, $easterMonth, $easterDay + 50, $easterYear),
         );
 
-        dump($publicHolidays);
-
-        /*foreach ($publicHolidays as $v)
+        foreach ($publicHolidays as $v)
         {
-            if($v === $timeDateSelected)
-            {
-                $this->context->buildViolation($constraint->message)->addViolation();
-            }
-        }*/
+            $datePublicHolidays = date('d-m-Y', $v);
 
-        for($i = 0; $i < sizeof($publicHolidays); $i++ )
-        {
-            if ($publicHolidays[$i] === $timeDateSelected)
+            dump($datePublicHolidays);
+
+            if($datePublicHolidays === $dateSelected)
             {
                 $this->context->buildViolation($constraint->message)->addViolation();
             }
         }
-
-
-		/*if(
-            $value == new \DateTime('01-01-'.$year) ||
-            $value == new \DateTime($easterDate) ||
-			$value == new \DateTime('01-05-'.$year) ||
-			$value == new \DateTime('08-05-'.$year) ||
-            $value == new \DateTime('14-07-'.$year) ||
-            $value == new \DateTime('15-08-'.$year) ||
-            $value == new \DateTime('01-11-'.$year) ||
-            $value == new \DateTime('11-11-'.$year) ||
-            $value == new \DateTime('25-12-'.$year))
-		{
-			$this->context->buildViolation($constraint->message)->addViolation();
-		}*/
 	}
 }

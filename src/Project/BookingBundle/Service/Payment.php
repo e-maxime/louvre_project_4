@@ -42,7 +42,7 @@ class Payment
      *
      * @return bool
      */
-    public function getPayment(Request $request,Booking $booking)
+    public function isPayment(Request $request, Booking $booking)
     {
         try{
             Stripe::setApiKey($this->stripeSecretKey);

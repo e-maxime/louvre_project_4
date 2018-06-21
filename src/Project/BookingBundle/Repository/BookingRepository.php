@@ -12,31 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class BookingRepository extends EntityRepository
 {
-    public function findTotalTicketsByDayToVisit($dayToVisit, $limit = null)
+    public function findTotalTicketsByDayToVisit($dayToVisit)
     {
-        //$query = $this->_em->createQuery('SELECT SUM(b.nbTickets) FROM ProjectBookingBundle:Booking b WHERE b.dayToVisit = :dayToVisit');
-        //$query->setParameter('dayToVisit', $dayToVisit);
-        $qb = $this->createQueryBuilder('b')
+        $queryBuilder = $this->createQueryBuilder('b')
             ->select('SUM(b.nbTickets)')
             ->where('b.dayToVisit = :day')
             ->setParameter('day', $dayToVisit);
 
-        $query = $qb->getQuery();
+        $query = $queryBuilder->getQuery();
 
         return $query->getSingleScalarResult();
     }
-
-    /*
-        public function findTotalJoinTicketsByDayToVisit($dayToVisit)
-        {
-            $query = $this->createQueryBuilder('b')
-                ->select('COUNT(v) as compteur')
-                ->innerJoin('b.visitors', 'v')
-                ->where('b.dayToVisit = :day')
-                ->setParameter('day', $dayToVisit)
-                ->getQuery();
-
-            return $query->getSingleScalarResult();
-        }
-    */
 }

@@ -14,12 +14,11 @@ class VisitorRepository extends EntityRepository
 {
     public function findBirthday($birthday)
     {
-        $qb = $this->createQueryBuilder('v');
+        $queryBuilder = $this->createQueryBuilder('v');
 
-        $qb->where('v.birthday = :birthday')
+        $queryBuilder->where('v.birthday = :birthday')
             ->setParameter('birthday', $birthday);
 
-        return $qb->getQuery()->getResult();
+        return $queryBuilder->getQuery()->getResult();
     }
-
 }

@@ -97,9 +97,8 @@ class BookingManager
         {
             throw new NotFoundHttpException('La page demandée n\'existe pas pour le moment car aucune donnée n\'a été envoyé');
         }
-        else {
-            return $currentSession;
-        }
+
+        return $currentSession;
     }
 
     /**
@@ -154,7 +153,7 @@ class BookingManager
      */
     public function executePayment(Booking $booking,Request $request)
     {
-        $transactionId = $this->payment->getPayment($request, $booking);
+        $transactionId = $this->payment->isPayment($request, $booking);
 
         if($transactionId !== false){
             $this->entityManager->persist($this->getCurrentBooking());
@@ -164,9 +163,7 @@ class BookingManager
 
             return true;
         }
-        else
-        {
-              return false;
-        }
+
+        return false;
     }
 }

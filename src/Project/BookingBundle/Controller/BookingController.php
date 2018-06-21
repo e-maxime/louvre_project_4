@@ -95,11 +95,12 @@ class BookingController extends Controller
 
             if ($executePayment) {
                 return $this->redirectToRoute('checked');
-            } else {
-                $this->addFlash('warning', 'Une erreur est survenue lors de l\'opération.');
-                return $this->redirectToRoute('payment');
             }
+
+            $this->addFlash('warning', 'Une erreur est survenue lors de l\'opération.');
+            return $this->redirectToRoute('payment');
         }
+
         return $this->render('Booking/payment.html.twig', array('booking' => $booking, 'stripe_public_key' => $this->getParameter('stripe_public_key')));
     }
 

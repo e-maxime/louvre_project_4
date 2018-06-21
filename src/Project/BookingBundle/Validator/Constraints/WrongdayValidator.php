@@ -38,8 +38,6 @@ class WrongdayValidator extends ConstraintValidator
         {
             $datePublicHolidays = date('d-m-Y', $v);
 
-            dump($datePublicHolidays);
-
             if($datePublicHolidays === $dateSelected)
             {
                 $this->context->buildViolation($constraint->message)->addViolation();

@@ -91,9 +91,9 @@ class BookingManager
     {
         $currentSession = $this->session->get(self::SESSION_CURRENT_BOOKING);
 
-        //$this->validator->validate($booking,null,$step);
+        $errors = $this->validator->validate($currentSession,null,$step);
 
-        if (!($this->validator->validate($currentSession,null, $step)) )
+        if (count($errors) > 0)
         {
             throw new NotFoundHttpException('La page demandée n\'existe pas pour le moment car aucune donnée n\'a été envoyé');
         }

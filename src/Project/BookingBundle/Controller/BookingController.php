@@ -87,7 +87,7 @@ class BookingController extends Controller
      */
     public function paymentAction(Request $request, BookingManager $bookingManager)
     {
-        $booking = $bookingManager->getCurrentBooking(array('Default', 'step2'));
+        $booking = $bookingManager->getCurrentBooking(array('Default', 'step1', 'step2'));
 
         if ($request->isMethod('POST')) {
 

@@ -19,9 +19,23 @@ class BookingController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/", name="homepage")
      */
-    public function indexAction()
+    public function indexAction(Request $request, BookingManager $bookingManager)
     {
-        return $this->render('Booking/index.html.twig');
+        $booking = $bookingManager->init();
+
+        $bookingForm = $this->createForm(BookingType::class, $booking);
+
+        $bookingForm->handleRequest($request);
+
+        if ($bookingForm->isSubmitted() && $bookingForm->isValid()) {
+
+            $bookingManager->generateTickets($booking);
+
+            return $this->redirectToRoute('visitor');
+        }
+
+        return $this->render('Booking/index.html.twig', array('bookingForm' => $bookingForm->createView()));
+//        return $this->render('Booking/index.html.twig');
     }
 
     /**

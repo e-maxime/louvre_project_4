@@ -4,60 +4,83 @@
     {{ parent() }} - Réservation
 {% endblock %}
 
-{% block body %}
-    <h1>Réserver vos billets - Ajout des informations</h1>
-    <br/>
-    <h2>Billets : </h2>
-    <br/>
-    <div class="well">
-    {{ form_start(visitorForm) }}
-        {% for visitor in visitorForm.visitors %}
-            <div class="form-group">
-                {{ form_label(visitor.name, "Nom : ", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-                {{ form_errors(visitor.name) }}
-                <div class="col-sm-4">
-                    {{ form_widget(visitor.name, {'attr': {'class': 'form-control'}}) }}
-                </div>
+{% block menu %}
+    {% include ':Booking:menu.html.twig' %}
+{% endblock %}
 
-                <br />
-
-                {{ form_label(visitor.firstName, "Prénom : ", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-                {{ form_errors(visitor.firstName) }}
-                <div class="col-sm-4">
-                    {{ form_widget(visitor.firstName, {'attr': {'class': 'form-control'}}) }}
-                </div>
-
-                <br />
-
-                {{ form_label(visitor.birthday, "Date de naissance :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-                {{ form_errors(visitor.birthday) }}
-                <div class="col-sm-5">
-                    {{ form_widget(visitor.birthday) }}
-                </div>
-
-                <br/>
-
-                {{ form_label(visitor.country, "Pays d'origine : ", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-                {{ form_errors(visitor.country) }}
-                <div class="col-sm-5">
-                    {{ form_widget(visitor.country) }}
-                </div>
-
-                <br/>
-
-                {{ form_label(visitor.reducePrice, "Tarif réduit", {'label_attr': {'class': 'col-sm-2 control label'}}) }}
-
-                {{ form_errors(visitor.reducePrice) }}
-                <div class="col-sm-3">
-                    <span title="Un justificatif(carte d'étudiant, employé du musée ou du Ministère de la Culture, militaire, ...) vous sera demandé à l'entrée."> {{  form_widget(visitor.reducePrice) }} </span>
-                </div>
+{% block header %}
+    <header class="masthead text-center text-white">
+        <div class="masthead-content">
+            <div class="container">
+                <h1 class="masthead-heading mb-0">Musée du Louvre</h1>
+                <h2 class="masthead-subheading mb-0">Réservation en ligne</h2>
             </div>
-            <hr>
-        {% endfor %}
-        <input type="submit" value="Valider" class="btn btn-primary">
-        {{ form_end(visitorForm) }}
+        </div>
+    </header>
+{% endblock %}
 
-    </div>
+{% block body %}
+    <section id="visitor_form_section">
+        <div class="container">
+            <h2 class="display-4">Réserver vos billets - Ajout des informations</h2>
+            <br/>
+            <div class="well">
+                {{ form_start(visitorForm) }}
+                {% set i = 0 %}
+                {% for visitor in visitorForm.visitors %}
+                    {% set i = i + 1 %}
+                    <h3>Billet n°{{ i }}</h3>
+                    <div class="form-group">
+                        {{ form_label(visitor.name, "Nom : ", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                        {{ form_errors(visitor.name) }}
+                        <div class="col-sm-4">
+                            {{ form_widget(visitor.name, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <br />
+
+                        {{ form_label(visitor.firstName, "Prénom : ", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                        {{ form_errors(visitor.firstName) }}
+                        <div class="col-sm-4">
+                            {{ form_widget(visitor.firstName, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <br />
+
+                        {{ form_label(visitor.birthday, "Date de naissance :", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                        {{ form_errors(visitor.birthday) }}
+                        <div class="col-sm-5">
+                            {{ form_widget(visitor.birthday) }}
+                        </div>
+
+                        <br/>
+
+                        {{ form_label(visitor.country, "Pays d'origine : ", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                        {{ form_errors(visitor.country) }}
+                        <div class="col-sm-4">
+                            {{ form_widget(visitor.country) }}
+                        </div>
+
+                        <br/>
+
+                        {{ form_label(visitor.reducePrice, "Tarif réduit", {'label_attr': {'class': 'col-sm-2 control label'}}) }}
+
+                        {{ form_errors(visitor.reducePrice) }}
+                        <div class="col-sm-3">
+                            <span title="Un justificatif(carte d'étudiant, employé du musée ou du Ministère de la Culture, militaire, ...) vous sera demandé à l'entrée."> {{  form_widget(visitor.reducePrice) }} </span>
+                        </div>
+                    </div>
+                    <hr>
+                {% endfor %}
+                <div style="text-align: center;">
+                    <input type="submit" value="Valider" class="btn btn-primary" style="width: 10%;">
+                </div>
+                {{ form_end(visitorForm) }}
+
+            </div>
+        </div>
+    </section>
+
 
 
 {% endblock %}

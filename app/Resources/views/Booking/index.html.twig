@@ -4,17 +4,55 @@
 	{{ parent() }}
 {% endblock%}
 
+{% block menu %}
+	{{ include(':Booking:menuIndex.html.twig') }}
+{%  endblock %}
+
+{% block header %}
+	<header class="masthead text-center text-white">
+		<div class="masthead-content">
+			<div class="container">
+				<h1 class="masthead-heading mb-0">Musée du Louvre</h1>
+				<h2 class="masthead-subheading mb-0">Réservation en ligne</h2>
+				<a href="#booking_section" class="btn btn-primary btn-xl rounded-pill mt-5">C'est parti !</a>
+			</div>
+		</div>
+	</header>
+{% endblock %}
+
 {% block body %}
-	<img src="../images/louvre3.jpg" alt="Louvre cour Marly" height="40%" width="40%" style="float: right; margin-left: 1%;"/>
-	<p>Vous vous apprêtez à visiter le plus grand musée du monde, fréquenté chaque année par près de 10 millions de visiteurs, dont la mission principale est d’assurer la conservation, l’éducation et la transmission d’un patrimoine aux générations futures.</p>
-	<p>Ce site est dédié exclusivement à la réservation de billet d'entrée pour le Musée, ce qui vous permettra d'éviter la file d'attente lors de l'achat de billet sur place. En fonction des données que vous saisirez sur la page de réservation, un tarif vous sera communiqué :</p>
-	<ul>
-		<li>Tarif normal à 16 € à partir de 12 ans</li>
-		<li>Tarif enfant à 8 € à partir de 4 ans et jusqu'à 12 ans (l'entrée est gratuite pour les enfants de moins de 4 ans)</li>
-		<li>Tarif sénior à 12 € à partir de 60 ans</li>
-		<li>Tarif réduit à 10 € accordé dans certaines conditions (étudiant, employé du musée, d'un service du Ministère de la Culture, militaire, ...)</li>
-	</ul>
-
-	<p>Pour réserver, <a href="{{ path('booking') }}">cliquez ici</a> ou dans le lien situé dans le menu.<br/> Nous vous souhaitons une agréable visite au Musée du Louvre.</p>
-
+	<section>
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-6 order-lg-2">
+					<div class="p-5">
+						<img class="img-fluid rounded-circle" src="{{ asset('images/louvre2.jpg') }}" alt="">
+					</div>
+				</div>
+				<div class="col-lg-6 order-lg-1">
+					<div class="p-5">
+						<h2 class="display-4">Bienvenue</h2>
+						<p>Vous êtes sur le site de réservation de billet pour le musée du Louvre. Acheter vos billets directement en ligne et gagner du temps sur votre visite !</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<br>
+	<section id="booking_section">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-6">
+					<div class="p-5">
+						<img class="img-fluid rounded-circle" src="{{ asset('images/louvre4.jpg') }}" alt="">
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="p-5">
+                        {% include ':Booking:booking.html.twig' %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 {% endblock %}

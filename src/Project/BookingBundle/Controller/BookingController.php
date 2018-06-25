@@ -6,16 +6,20 @@ use Project\BookingBundle\Entity\Booking;
 use Project\BookingBundle\Form\BookingType;
 use Project\BookingBundle\Form\BookingVisitorsType;
 use Project\BookingBundle\Manager\BookingManager;
-use Project\BookingBundle\Service\MailSender;
-use Project\BookingBundle\Service\Payment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 
+/**
+ * Class BookingController
+ * @package Project\BookingBundle\Controller
+ */
 class BookingController extends Controller
 {
     /**
+     * @param Request $request
+     * @param BookingManager $bookingManager
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/", name="homepage")
      */
@@ -48,15 +52,11 @@ class BookingController extends Controller
         /** @var Booking $booking */
         $booking = $bookingManager->getCurrentBooking(array('Default', 'step1'));
 
-
-        dump($booking);
-
         $visitorForm = $this->createForm(BookingVisitorsType::class, $booking);
 
         $visitorForm->handleRequest($request);
 
         if ($visitorForm->isSubmitted() && $visitorForm->isValid()) {
-
 
             $bookingManager->computePrice($booking);
 
@@ -100,7 +100,7 @@ class BookingController extends Controller
      */
     public function checkedAction(BookingManager $bookingManager)
     {
-        $booking = $bookingManager->getCurrentBooking();
+        $booking = $bookingManager->getCurrentBooking(array('Default', 'step1', 'step2'));
         $bookingManager->removeCurrentBooking();
         return $this->render('Booking/confirmed.html.twig', array('booking' => $booking));
     }

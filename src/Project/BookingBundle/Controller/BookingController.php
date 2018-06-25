@@ -35,31 +35,6 @@ class BookingController extends Controller
         }
 
         return $this->render('Booking/index.html.twig', array('bookingForm' => $bookingForm->createView()));
-//        return $this->render('Booking/index.html.twig');
-    }
-
-    /**
-     * @param Request $request
-     * @param BookingManager $bookingManager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @Route("/reserver", name="booking")
-     */
-    public function bookingAction(Request $request, BookingManager $bookingManager)
-    {
-        $booking = $bookingManager->init();
-
-        $bookingForm = $this->createForm(BookingType::class, $booking);
-
-        $bookingForm->handleRequest($request);
-
-        if ($bookingForm->isSubmitted() && $bookingForm->isValid()) {
-
-            $bookingManager->generateTickets($booking);
-
-            return $this->redirectToRoute('visitor');
-        }
-
-        return $this->render('Booking/booking.html.twig', array('bookingForm' => $bookingForm->createView()));
     }
 
     /**

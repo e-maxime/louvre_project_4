@@ -3,10 +3,26 @@
   src: url("../fonts/CammronDemo.ttf");
 }
 
+html{
+  height: 100%;
+}
+
 body {
   font-family: 'Times';
   font-size: 1.1em;
+  height:100%;
+  position:relative;
+  margin: 0;
+  padding: 0;
 }
+
+footer{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
 
 h1,
 h2,

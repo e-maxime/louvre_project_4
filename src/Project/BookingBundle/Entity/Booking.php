@@ -6,14 +6,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Project\BookingBundle\Validator\Constraints as MyAssert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\GroupSequenceProviderInterface;
 
 /**
  * Booking
  *
  * @ORM\Table(name="booking")
  * @ORM\Entity(repositoryClass="Project\BookingBundle\Repository\BookingRepository")
- * @MyAssert\HourExceeds(groups={"step1"})
- * @MyAssert\MaxTicketsSold(groups={"step1"})
+ * @MyAssert\HourExceeds(groups={"booking_group_validation"})
+ * @MyAssert\MaxTicketsSold(groups={"booking_group_validation"})
  *
  */
 class Booking
@@ -40,7 +41,7 @@ class Booking
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
-     * @Assert\Email(groups={"step1"})
+     * @Assert\Email(groups={"booking_group_validation"})
      */
     private $email;
 
@@ -48,10 +49,10 @@ class Booking
      * @var \DateTime
      *
      * @ORM\Column(name="dayToVisit", type="date")
-     * @Assert\GreaterThanOrEqual("today", message="Vous ne pouvez pas réservé de billets pour un jour passé.", groups={"step1"})
-     * @Assert\NotEqualTo("tuesday", message="Le musée est fermé le Mardi.", groups={"step1"})
-     * @Assert\NotEqualTo("sunday", message="Le musée est fermé le Dimanche.", groups={"step1"})
-     * @MyAssert\Wrongday(groups={"step1"})
+     * @Assert\GreaterThanOrEqual("today", message="Vous ne pouvez pas réservé de billets pour un jour passé.", groups={"booking_group_validation"})
+     * @Assert\NotEqualTo("tuesday", message="Le musée est fermé le Mardi.", groups={"booking_group_validation"})
+     * @Assert\NotEqualTo("sunday", message="Le musée est fermé le Dimanche.", groups={"booking_group_validation"})
+     * @MyAssert\Wrongday(groups={"booking_group_validation"})
      */
     private $dayToVisit;
 
@@ -66,15 +67,15 @@ class Booking
      * @var int
      *
      * @ORM\Column(name="nbTickets", type="integer")
-     * @Assert\NotBlank(groups={"step1"})
-     * @Assert\GreaterThan(0, message="Vous devez réserver au moins 1 billet.", groups={"step1"})
+     * @Assert\NotBlank(groups={"booking_group_validation"})
+     * @Assert\GreaterThan(0, message="Vous devez réserver au moins 1 billet.", groups={"booking_group_validation"})
      */
     private $nbTickets;
 
     /**
      * @var Visitor[]|ArrayCollection
      * @ORM\OneToMany(targetEntity="Project\BookingBundle\Entity\Visitor", mappedBy="booking", cascade={"persist"})
-     * @Assert\Valid(groups={"step2"})
+     * @Assert\Valid(groups={"visitor_group_validation"})
      */
     private $visitors;
 
@@ -87,7 +88,7 @@ class Booking
     /**
      * @var string
      * @ORM\Column(name="orderId", type="string")
-     *
+     * @Assert\NotNull(groups={"confirmed_order"})
      */
     private $orderId;
     

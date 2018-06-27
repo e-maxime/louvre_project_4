@@ -24,12 +24,19 @@ class BookingManager
     const AGE_SENIOR = 60;
     const AGE_TEENAGER = 12;
     const AGE_KIDS = 4;
+    const NEED_DATA_BOOKING = 2;
+    const NEED_DATA_TICKETS = 3;
+    const NEED_ID_ORDER = 4;
+    const GROUP_VALID_BOOKING = "booking_group_validation";
+    const GROUP_VALID_VISITOR = "visitor_group_validation";
+    const GROUP_ID_ORDER = "confirmed_order";
 
 
     /**
      * @var SessionInterface
      */
     private $session;
+
     private $entityManager;
     /**
      * @var Payment
@@ -70,7 +77,6 @@ class BookingManager
         $booking = new Booking();
         $this->session->set(self::SESSION_CURRENT_BOOKING, $booking);
         return $booking;
-
     }
 
     /**
@@ -87,17 +93,34 @@ class BookingManager
      * @param array $step
      * @return mixed
      */
-    public function getCurrentBooking($step = [])
+    public function getCurrentBooking($step = null)
     {
-        $currentSession = $this->session->get(self::SESSION_CURRENT_BOOKING);
+        $groups = [];
 
-        $errors = $this->validator->validate($currentSession,null,$step);
-
-        if (count($errors) > 0)
-        {
-            throw new NotFoundHttpException('La page demandée n\'existe pas pour le moment car aucune donnée n\'a été envoyé');
+        switch ($step){
+            case self::NEED_DATA_BOOKING :
+                $groups = [self::GROUP_VALID_BOOKING];
+                break;
+            case self::NEED_DATA_TICKETS :
+                $groups = [self::GROUP_VALID_BOOKING, self::GROUP_VALID_VISITOR];
+                break;
+            case self::NEED_ID_ORDER :
+                $groups = [self::GROUP_VALID_BOOKING, self::GROUP_VALID_VISITOR, self::GROUP_ID_ORDER];
+                break;
         }
 
+        $currentSession = $this->session->get(self::SESSION_CURRENT_BOOKING);
+
+        if(!$currentSession){
+            throw new NotFoundHttpException('La page demandée n\'existe pas pour le moment car aucune donnée n\'a été envoyé');
+        }else{
+            $errors = $this->validator->validate($currentSession, null, $groups);
+
+            if (count($errors) > 0)
+            {
+                throw new NotFoundHttpException('La page demandée n\'existe pas pour le moment car aucune donnée n\'a été envoyé');
+            }
+        }
         return $currentSession;
     }
 

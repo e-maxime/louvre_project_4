@@ -20,8 +20,8 @@ class BookingType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
-            ->add('dayToVisit', DateType::class, array('format' => 'ddMMyyyy'))
-            ->add('typeOfTicket', ChoiceType::class, array('choices' => array('Journée entière' => true, 'Demi-journée' => false), 'expanded' => true))
+            ->add('dayToVisit', DateType::class, array('widget' => 'single_text'))
+            ->add('typeOfTicket', ChoiceType::class, array('placeholder' => 'Choisissez une option', 'choices' => array('Journée entière' => false, 'Demi-journée' => false)))
             ->add('nbTickets', IntegerType::class)
             ;
     }
@@ -33,7 +33,7 @@ class BookingType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Booking::class,
-            'validation_groups' => ['Default', 'step1']
+            'validation_groups' => array('booking_group_validation')
         ));
     }
 

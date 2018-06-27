@@ -20,10 +20,10 @@ class VisitorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array('label' => 'Nom :'))
-            ->add('firstName', TextType::class, array('label' => 'Prénom :'))
-            ->add('birthday', BirthdayType::class, array('label' => 'Date de naissance :', 'format' => 'ddMMyyyy'))
-            ->add('country', CountryType::class, array('label' => 'Pays d\'origine :', 'preferred_choices' => 'France'))
+            ->add('name', TextType::class)
+            ->add('firstName', TextType::class)
+            ->add('birthday', BirthdayType::class, array('widget' => 'single_text'))
+            ->add('country', CountryType::class, array('preferred_choices' => 'France'))
             ->add('reducePrice', CheckboxType::class, array('label' => 'Tarif réduit *', 'required' => false))
             ;
     }
@@ -34,7 +34,8 @@ class VisitorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Visitor::class
+            'data_class' => Visitor::class,
+            'validation_groups' => array('visitor_group_validation')
         ));
     }
 

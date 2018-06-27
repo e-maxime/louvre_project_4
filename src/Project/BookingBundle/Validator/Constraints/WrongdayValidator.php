@@ -41,6 +41,7 @@ class WrongdayValidator extends ConstraintValidator
             if($datePublicHolidays === $dateSelected)
             {
                 $this->context->buildViolation($constraint->message)->addViolation();
+                break;
             }
         }
 	}

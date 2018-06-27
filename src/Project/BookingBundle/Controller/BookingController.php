@@ -50,7 +50,7 @@ class BookingController extends Controller
     public function visitorAction(Request $request, BookingManager $bookingManager)
     {
         /** @var Booking $booking */
-        $booking = $bookingManager->getCurrentBooking(array('Default', 'step1'));
+        $booking = $bookingManager->getCurrentBooking(BookingManager::NEED_DATA_BOOKING);
 
         $visitorForm = $this->createForm(BookingVisitorsType::class, $booking);
 
@@ -76,7 +76,7 @@ class BookingController extends Controller
      */
     public function paymentAction(Request $request, BookingManager $bookingManager)
     {
-        $booking = $bookingManager->getCurrentBooking(array('Default', 'step1', 'step2'));
+        $booking = $bookingManager->getCurrentBooking(BookingManager::NEED_DATA_TICKETS);
 
         if ($request->isMethod('POST')) {
 
@@ -100,7 +100,7 @@ class BookingController extends Controller
      */
     public function checkedAction(BookingManager $bookingManager)
     {
-        $booking = $bookingManager->getCurrentBooking(array('Default', 'step1', 'step2'));
+        $booking = $bookingManager->getCurrentBooking(BookingManager::NEED_ID_ORDER);
         $bookingManager->removeCurrentBooking();
         return $this->render('Booking/confirmed.html.twig', array('booking' => $booking));
     }

@@ -1,7 +1,7 @@
 <h1>Réserver vos billets</h1>
    <div class="well">
       {{ form_start(bookingForm, {'attr': {'class': 'form-horizontal'}}) }}
-       {% if form_errors(bookingForm) %}<div class="alert alert-danger">{{ form_errors(bookingForm) }}</div>{% endif %}
+      {{ form_errors(bookingForm) }}
       <div class="form-group">
 
       {{ form_label(bookingForm.email, "Adresse email :", {'label_attr': {'class': 'col-sm-12 control-label'}}) }}

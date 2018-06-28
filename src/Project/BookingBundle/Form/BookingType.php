@@ -21,7 +21,7 @@ class BookingType extends AbstractType
         $builder
             ->add('email', EmailType::class)
             ->add('dayToVisit', DateType::class, array('widget' => 'single_text'))
-            ->add('typeOfTicket', ChoiceType::class, array('placeholder' => 'Choisissez une option', 'choices' => array('Journée entière' => false, 'Demi-journée' => false)))
+            ->add('typeOfTicket', ChoiceType::class, array('placeholder' => 'Choisissez une option', 'choices' => array('Journée entière' => true, 'Demi-journée' => false)))
             ->add('nbTickets', IntegerType::class)
             ;
     }

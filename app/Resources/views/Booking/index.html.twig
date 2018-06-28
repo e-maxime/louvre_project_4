@@ -39,15 +39,51 @@
 		</div>
 	</section>
 	<br>
+	<section>
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-5">
+					<div class="p-5">
+						<img class="img-fluid rounded-circle" src="{{ asset('images/louvre3.jpg') }}" alt="">
+					</div>
+				</div>
+				<div class="col-lg-7">
+					<div class="p-5">
+						<h2>Les tarifs</h2>
+						<table class="table table-striped">
+							<thead>
+							<tr>
+								<th>Enfants*</th>
+								<th>Normal (à partir de 12 ans)</th>
+								<th>Sénior (à partir de 60 ans)</th>
+								<th>Tarif réduit**</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>8,00 €</td>
+								<td>16,00 €</td>
+								<td>12,00 €</td>
+								<td>10,00 €</td>
+							</tr>
+							</tbody>
+						</table>
+						<p><em>*L'entrée est gratuite pour les enfants de moins de 4 ans.<br/>**Accordé sous certaines conditions (étudiant, employé du musée, d'un service du Ministère de la Culture, militaire, ...)</em></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<br>
 	<section id="booking_section">
 		<div class="container">
 			<div class="row align-items-center">
-				<div class="col-lg-6">
+				<div class="col-lg-6 order-lg-2">
 					<div class="p-5">
 						<img class="img-fluid rounded-circle" src="{{ asset('images/louvre4.jpg') }}" alt="">
 					</div>
 				</div>
-				<div class="col-lg-6">
+				<div class="col-lg-6 order-lg-1">
 					<div class="p-5">
                         {% include ':Booking:booking.html.twig' %}
 					</div>

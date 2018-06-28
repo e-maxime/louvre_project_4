@@ -29,8 +29,18 @@ class BookingManagerTest extends TestCase
         $this->assertInstanceOf(Booking::class, $booking);
     }
 
+    protected function setUp()
+    {
+        $session = $this->getMockBuilder('Symfony\Component\HttpFoundation\Session\SessionInterface')->disableOriginalConstructor()->getMock();
+        $entityManagerInterface = $this->getMockBuilder('Doctrine\ORM\EntityManagerInterface')->disableOriginalConstructor()->getMock();
+        $payment = $this->getMockBuilder('Project\BookingBundle\Service\Payment')->disableOriginalConstructor()->getMock();
+        $mailSender = $this->getMockBuilder('Project\BookingBundle\Service\MailSender')->disableOriginalConstructor()->getMock();
+        $validatorInterface = $this->getMockBuilder('Symfony\Component\Validator\Validator\ValidatorInterface')->disableOriginalConstructor()->getMock();
+        $this->bookingManager = new BookingManager($session, $entityManagerInterface, $payment, $mailSender, $validatorInterface);
+    }
+
     /**
-     * @param $halfDay
+     * @param $fullDay
      * @param $age
      * @param $expected
      *
@@ -41,8 +51,9 @@ class BookingManagerTest extends TestCase
         $booking = new Booking();
         $booking->setDayToVisit(new \DateTime());
         $booking->setTypeOfTicket($fullDay);
+
         $ticket1 = new Visitor();
-        $ticket1->setBirthday((new \DateTime('- ' . $age . ' years')));
+        $ticket1->setBirthday((new \DateTime('-' . $age . ' years')));
 
         $booking->addVisitor($ticket1);
 
@@ -55,20 +66,17 @@ class BookingManagerTest extends TestCase
     public function computePriceProvider()
     {
         return [
-            ['fullDay' => true, 'age' => 10, 'expected' => 8],
-            ['fullDay' => false, 'age' => 10, 'expected' => 5]
+            ['fullDay' => true, 'age' => 25, 'expected' => 16],
+            ['fullDay' => false, 'age' => 25, 'expected' => 8]
         ];
     }
 
-    protected function setUp()
+    public function testGenerateTickets()
     {
-        $session = $this->getMockBuilder('Symfony\Component\HttpFoundation\Session\SessionInterface')->disableOriginalConstructor()->getMock();
-        $entityManagerInterface = $this->getMockBuilder('Doctrine\ORM\EntityManagerInterface')->disableOriginalConstructor()->getMock();
-        $payment = $this->getMockBuilder('Project\BookingBundle\Service\Payment')->disableOriginalConstructor()->getMock();
-        $mailSender = $this->getMockBuilder('Project\BookingBundle\Service\MailSender')->disableOriginalConstructor()->getMock();
-        $validatorInterface = $this->getMockBuilder('Symfony\Component\Validator\Validator\ValidatorInterface')->disableOriginalConstructor()->getMock();
-        $this->bookingManager = new BookingManager($session, $entityManagerInterface, $payment, $mailSender, $validatorInterface);
+        $booking = new Booking();
+        $booking->setNbTickets(3);
+
+        $this->bookingManager->generateTickets($booking);
+        $this->assertEquals(3, $booking->getVisitors()->count());
     }
-
-
 }

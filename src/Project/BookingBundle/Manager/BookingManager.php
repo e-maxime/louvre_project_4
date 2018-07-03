@@ -134,40 +134,6 @@ class BookingManager
 
     /**
      * @param Booking $booking
-     */
-    public function computePrice(Booking $booking)
-    {
-        $priceTotal = 0;
-        foreach ($booking->getVisitors() as $visitor) {
-            $age = $visitor->getAge();
-            if ($age < BookingManager::AGE_KIDS) {
-                $price = Booking::PRICE_FREE;
-            } else if ($age < BookingManager::AGE_TEENAGER) {
-                $price = Booking::PRICE_CHILD;
-            } else if ($age < BookingManager::AGE_SENIOR) {
-                $price = Booking::PRICE_NORMAL;
-            } else {
-                $price = Booking::PRICE_OLD;
-            }
-
-            if($visitor->getReducePrice()  && $price > Booking::PRICE_REDUCED){
-                $price = Booking::PRICE_REDUCED;
-            }else{
-                $visitor->setReducePrice(false);
-            }
-
-            if($booking->getTypeOfTicket() == Booking::TYPE_HALF_DAY){
-                $price = $price * Booking::PRICE_HALF_DAY_MULTIPLICATOR;
-            }
-
-            $visitor->setPrice($price);
-            $priceTotal += $visitor->getPrice();
-        }
-        $booking->setTotalPrice($priceTotal);
-    }
-
-    /**
-     * @param Booking $booking
      * @param Request $request
      * @return bool
      * @throws \Twig_Error_Loader

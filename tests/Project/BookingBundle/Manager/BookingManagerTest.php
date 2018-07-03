@@ -39,38 +39,6 @@ class BookingManagerTest extends TestCase
         $this->bookingManager = new BookingManager($session, $entityManagerInterface, $payment, $mailSender, $validatorInterface);
     }
 
-    /**
-     * @param $fullDay
-     * @param $age
-     * @param $expected
-     *
-     * @dataProvider computePriceProvider
-     */
-    public function testComputePrice($fullDay, $age, $expected)
-    {
-        $booking = new Booking();
-        $booking->setDayToVisit(new \DateTime());
-        $booking->setTypeOfTicket($fullDay);
-
-        $ticket1 = new Visitor();
-        $ticket1->setBirthday((new \DateTime('-' . $age . ' years')));
-
-        $booking->addVisitor($ticket1);
-
-        $this->bookingManager->computePrice($booking);
-        $this->assertEquals($expected, $booking->getTotalPrice());
-
-
-    }
-
-    public function computePriceProvider()
-    {
-        return [
-            ['fullDay' => true, 'age' => 25, 'expected' => 16],
-            ['fullDay' => false, 'age' => 25, 'expected' => 8]
-        ];
-    }
-
     public function testGenerateTickets()
     {
         $booking = new Booking();

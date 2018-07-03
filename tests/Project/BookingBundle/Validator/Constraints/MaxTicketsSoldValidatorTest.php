@@ -16,22 +16,16 @@ use Symfony\Component\Validator\Constraint;
 
 class MaxTicketsSoldValidatorTest extends TestCase
 {
-    private $maxTickets;
-
-    public function setUp()
+    public function testMaxTicketsValidate()
     {
         $entityManager = $this->getMockBuilder('Doctrine\ORM\EntityManagerInterface')->disableOriginalConstructor()->getMock();
-        $this->maxTickets = new MaxTicketsSoldValidator($entityManager);
-    }
-
-    public function testValidate()
-    {
+        $maxTickets = new MaxTicketsSoldValidator($entityManager);
 
         $booking = new Booking();
         $booking->setDayToVisit(new \DateTime());
         $booking->setNbTickets(5);
 
-        $this->maxTickets->validate($booking, Constraint::class);
+        $maxTickets->validate($booking, Constraint::class);
 
         $this->assertAttributeLessThanOrEqual(1000, $this->getResult() ,$this->maxTickets, "Ok");
     }

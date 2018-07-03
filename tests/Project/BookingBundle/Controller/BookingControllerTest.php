@@ -8,13 +8,10 @@
 
 namespace Tests\Project\BookingBundle\Controller;
 
-use Project\BookingBundle\Entity\Booking;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BookingControllerTest extends WebTestCase
 {
-    // TESTS FONCTIONNELS
-
     public function testHomepageIsUp()
     {
         $client = static::createClient();
@@ -40,7 +37,7 @@ class BookingControllerTest extends WebTestCase
 
         $form = $crawler->selectButton('Réserver')->form();
         $form['project_bookingbundle_ticket[email]'] = 'maxime@enrietto.fr';
-        $form['project_bookingbundle_ticket[dayToVisit]'] = '2018-06-28';
+        $form['project_bookingbundle_ticket[dayToVisit]'] = '2018-07-02';
         $form['project_bookingbundle_ticket[typeOfTicket]'] = 1;
         $form['project_bookingbundle_ticket[nbTickets]'] = '2';
         $client->submit($form);
@@ -65,6 +62,5 @@ class BookingControllerTest extends WebTestCase
         $client->followRedirect();
 
         echo $client->getResponse()->getContent();
-
     }
 }

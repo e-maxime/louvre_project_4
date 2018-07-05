@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class BookingController
- * @package Project\BookingBundle\Controller
+ * @package Project\ProjectBookingBundle\Controller
  */
 class BookingController extends Controller
 {

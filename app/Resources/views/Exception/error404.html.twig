@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block title %}An Error Occurred: {{ status_text }}{% endblock %}
+
+{% block body %}
+    <section>
+        <div class="container">
+            <h1>Page introuvable</h1>
+            <h2>Le serveur a retourné une erreur "{{ status_code }} {{ status_text }}".</h2>
+        </div>
+    </section>
+{% endblock %}

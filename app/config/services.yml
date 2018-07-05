@@ -15,18 +15,18 @@ services:
         public: false
 
 
-    # makes classes in src/Project/BookingBundle available to be used as services
+    # makes classes in src/Project/ProjectBookingBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     Project\BookingBundle\:
-        resource: '../../src/Project/BookingBundle/*'
+        resource: '../../src/Project/ProjectBookingBundle/*'
         # you can exclude directories or files
         # but if a service is unused, it's removed anyway
-        exclude: '../../src/Project/BookingBundle/{Controller,Entity,Repository}'
+        exclude: '../../src/Project/ProjectBookingBundle/{Controller,Entity,Repository}'
 
     # controllers are imported separately to make sure they're public
     # and have a tag that allows actions to type-hint services
     Project\BookingBundle\Controller\:
-        resource: '../../src/Project/BookingBundle/Controller'
+        resource: '../../src/Project/ProjectBookingBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
 

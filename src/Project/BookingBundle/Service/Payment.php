@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class Payment
- * @package Project\BookingBundle\Service
+ * @package Project\ProjectBookingBundle\Service
  */
 class Payment
 {

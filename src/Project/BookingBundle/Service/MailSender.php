@@ -13,7 +13,7 @@ use Project\BookingBundle\Entity\Booking;
 
 /**
  * Class MailSender
- * @package Project\BookingBundle\Service
+ * @package Project\ProjectBookingBundle\Service
  */
 class MailSender
 {

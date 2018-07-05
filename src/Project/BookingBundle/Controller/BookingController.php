@@ -6,31 +6,25 @@ use Project\BookingBundle\Entity\Booking;
 use Project\BookingBundle\Form\BookingType;
 use Project\BookingBundle\Form\BookingVisitorsType;
 use Project\BookingBundle\Manager\BookingManager;
-use Project\BookingBundle\Service\MailSender;
-use Project\BookingBundle\Service\Payment;
+use Project\BookingBundle\Service\ComputePrice;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 
+/**
+ * Class BookingController
+ * @package Project\BookingBundle\Controller
+ */
 class BookingController extends Controller
 {
     /**
+     * @param Request $request
+     * @param BookingManager $bookingManager
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/", name="homepage")
      */
-    public function indexAction()
-    {
-        return $this->render('Booking/index.html.twig');
-    }
-
-    /**
-     * @param Request $request
-     * @param BookingManager $bookingManager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @Route("/reserver", name="booking")
-     */
-    public function bookingAction(Request $request, BookingManager $bookingManager)
+    public function indexAction(Request $request, BookingManager $bookingManager)
     {
         $booking = $bookingManager->init();
 
@@ -45,22 +39,20 @@ class BookingController extends Controller
             return $this->redirectToRoute('visitor');
         }
 
-        return $this->render('Booking/booking.html.twig', array('bookingForm' => $bookingForm->createView()));
+        return $this->render('Booking/index.html.twig', array('bookingForm' => $bookingForm->createView()));
     }
 
     /**
      * @param Request $request
      * @param BookingManager $bookingManager
+     * @param ComputePrice $computePrice
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/informations_visiteurs", name="visitor")
      */
-    public function visitorAction(Request $request, BookingManager $bookingManager)
+    public function visitorAction(Request $request, BookingManager $bookingManager, ComputePrice $computePrice)
     {
         /** @var Booking $booking */
-        $booking = $bookingManager->getCurrentBooking(array('Default', 'step1'));
-
-
-        dump($booking);
+        $booking = $bookingManager->getCurrentBooking(BookingManager::NEED_DATA_BOOKING);
 
         $visitorForm = $this->createForm(BookingVisitorsType::class, $booking);
 
@@ -68,8 +60,7 @@ class BookingController extends Controller
 
         if ($visitorForm->isSubmitted() && $visitorForm->isValid()) {
 
-
-            $bookingManager->computePrice($booking);
+            $computePrice->getTotal($booking);
 
             return $this->redirectToRoute('payment');
         }
@@ -87,7 +78,7 @@ class BookingController extends Controller
      */
     public function paymentAction(Request $request, BookingManager $bookingManager)
     {
-        $booking = $bookingManager->getCurrentBooking(array('Default', 'step1', 'step2'));
+        $booking = $bookingManager->getCurrentBooking(BookingManager::NEED_DATA_TICKETS);
 
         if ($request->isMethod('POST')) {
 
@@ -111,7 +102,7 @@ class BookingController extends Controller
      */
     public function checkedAction(BookingManager $bookingManager)
     {
-        $booking = $bookingManager->getCurrentBooking();
+        $booking = $bookingManager->getCurrentBooking(BookingManager::NEED_ID_ORDER);
         $bookingManager->removeCurrentBooking();
         return $this->render('Booking/confirmed.html.twig', array('booking' => $booking));
     }

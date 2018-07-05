@@ -31,7 +31,7 @@ class BookingVisitorsType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Booking::class,
-            'validation_groups' => ['Default', 'step1', 'step2']
+            'validation_groups' => array('visitor_group_validation')
         ));
     }
 

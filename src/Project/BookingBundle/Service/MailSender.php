@@ -47,7 +47,6 @@ class MailSender
      */
     public function sendBookingConfirmation(Booking $booking)
     {
-
         $message = (new \Swift_Message('Votre réservation pour le musée du Louvre'))
             ->setFrom('reservation@museedulouvre.fr')
             ->setTo($booking->getEmail())

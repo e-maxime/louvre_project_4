@@ -26,7 +26,7 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"visitor_group_validation"})
      */
     private $name;
 
@@ -34,7 +34,7 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"visitor_group_validation"})
      */
     private $firstName;
 

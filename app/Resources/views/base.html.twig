@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%;">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,44 +8,31 @@
 		{#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">#}
 		<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
 		<link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+		<link rel="stylesheet" href="{{ asset('css/one-page-wonder.css') }}">
 	{% endblock %}
 </head>
 
-<body>
-	<div class="banner">
-          <h1>Musée du <br/>Louvre</h1>
-	</div>
-
+<body style="min-height: 100%; position: relative; padding-bottom: 8em;">
     {% block menu %}
-        {% include ':Booking:menu.html.twig' %}
+
     {% endblock %}
 
+	{% block header %}
+    {% endblock %}
 
-    <div class="container">
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-				<div class="alert alert-{{ label }}" role="alert">
-					{{ message }}
-				</div>
-            {% endfor %}
-        {% endfor %}
+	{% block body %}
+	{% endblock %}
 
-    	{% block body  %}
-			<p>
-				Bienvenue sur le site de réservation de billet pour le musée du Louvre. Acheter vos billets directement en ligne et gagner du temps sur votre visite !
-			</p>
-		{% endblock %}
-	
-		<hr>
-    </div>
-	
-
-	<footer class="container">
-		<p>Musée du Louvre © {{ 'now'|date('Y') }}.</p>
+	<footer class="py-5 bg-black" style="position: absolute; bottom: 0; left: 0; right: 0;">
+		<div class="container">
+			<p class="m-0 text-center text-white small">Musée du Louvre © {{ 'now'|date('Y') }}</p>
+		</div>
+		<!-- /.container -->
 	</footer>
 
 	{% block javascripts %}
-
+		<script src="{{ asset('jquery/jquery.js') }}"></script>
+		<script src="{{ asset('js/bootstrap.bundle.js') }}"></script>
   	{% endblock %}
 </body>
 </html>

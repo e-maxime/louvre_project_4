@@ -4,12 +4,30 @@
     {{ parent() }}
 {% endblock %}
 
-{% block body %}
+{% block menu %}
+    {% include ':Booking:menu.html.twig' %}
+{% endblock %}
 
-    <div class="alert alert-success">
-        <h4>Commande n°{{ booking.orderId }}</h4>
-        Votre réservation a bien été prise en compte. Un email de confirmation vous a été adressé à l'adresse <strong>{{ booking.email }}</strong>.<br/>
-        Pour toute question, n'hésitez pas à contacter notre service client par <a href="#">mail</a> ou par téléphone au 01.22.33.44.55.
-    </div>
+{% block header %}
+    <header class="masthead text-center text-white">
+        <div class="masthead-content">
+            <div class="container">
+                <h1 class="masthead-heading mb-0">Musée du Louvre</h1>
+                <h2 class="masthead-subheading mb-0">Réservation en ligne</h2>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block body %}
+    <section id="confirmed_section">
+        <div class="container">
+            <div class="alert alert-success" style="word-wrap: break-word;">
+                <h4 class="alert-heading">Commande n°{{ booking.orderId }}</h4>
+                Votre réservation a bien été prise en compte. Un email de confirmation vous a été adressé à l'adresse <strong>{{ booking.email }}</strong>.<br/>
+                Pour toute question, n'hésitez pas à contacter notre service client par <a href="#">mail</a> ou par téléphone au 01.22.33.44.55.
+            </div>
+        </div>
+    </section>
 
 {% endblock %}

@@ -1,0 +1,137 @@
+PHPUnit 5.7.27 by Sebastian Bergmann and contributors.
+
+..                                                                  2 / 2 (100%)<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>	Musée du Louvre
+</title>
+					<link rel="stylesheet" href="/css/bootstrap.css">
+		<link rel="stylesheet" href="/css/style.css" />
+		<link rel="stylesheet" href="/css/one-page-wonder.css">
+	</head>
+
+<body>
+    	<nav>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#booking_section">Réserver</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</nav>
+
+		<header class="masthead text-center text-white">
+		<div class="masthead-content">
+			<div class="container">
+				<h1 class="masthead-heading mb-0">Musée du Louvre</h1>
+				<h2 class="masthead-subheading mb-0">Réservation en ligne</h2>
+				<a href="#booking_section" class="btn btn-primary btn-xl rounded-pill mt-5">C'est parti !</a>
+			</div>
+		</div>
+	</header>
+
+		<section>
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-6 order-lg-2">
+					<div class="p-5">
+						<img class="img-fluid rounded-circle" src="/images/louvre2.jpg" alt="">
+					</div>
+				</div>
+				<div class="col-lg-6 order-lg-1">
+					<div class="p-5">
+						<h2 class="display-4">Bienvenue</h2>
+						<p>Vous êtes sur le site de réservation de billet pour le musée du Louvre. Acheter vos billets directement en ligne et gagner du temps sur votre visite !</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<br>
+	<section id="booking_section">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-6">
+					<div class="p-5">
+						<img class="img-fluid rounded-circle" src="/images/louvre4.jpg" alt="">
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="p-5">
+                        <h1>Réserver vos billets</h1>
+   <div class="well">
+      <form name="project_bookingbundle_ticket" method="post" class="form-horizontal">
+      
+      <div class="form-group">
+
+      <label class="col-sm-12 control-label col-form-label col-sm-2 form-control-label required" for="project_bookingbundle_ticket_email">Adresse email :</label>
+
+      <div class="col-sm-12">
+         <input type="email" id="project_bookingbundle_ticket_email" name="project_bookingbundle_ticket[email]" required="required" class="form-control form-control" />
+      </div>
+
+      <br />
+
+      <label class="col-sm-12 control-label col-form-label col-sm-2 form-control-label required" for="project_bookingbundle_ticket_dayToVisit">Jour de visite :</label>
+
+      <div class="col-sm-12">
+         <input type="date" id="project_bookingbundle_ticket_dayToVisit" name="project_bookingbundle_ticket[dayToVisit]" required="required" class="form-control" value="2018-06-27" />
+      </div>
+
+      <br/>
+
+      <label class="col-sm-12 control-label col-form-label col-sm-2 form-control-label required" for="project_bookingbundle_ticket_typeOfTicket">Type de la visite :</label>
+      <div class="col-sm-12">
+         <select id="project_bookingbundle_ticket_typeOfTicket" name="project_bookingbundle_ticket[typeOfTicket]" required="required" class="form-control"><option value="" selected="selected">Choisissez une option</option><option value="0">Journée entière</option><option value="1">Demi-journée</option></select>
+      </div>
+
+      <br/>
+
+      <label class="col-sm-12 control-label col-form-label col-sm-2 form-control-label required" for="project_bookingbundle_ticket_nbTickets">Nombre de visiteurs :</label>
+      <div class="col-sm-12">
+         <input type="number" id="project_bookingbundle_ticket_nbTickets" name="project_bookingbundle_ticket[nbTickets]" required="required" class="form-control form-control" />
+      </div>
+      
+      <br/>
+
+      <div style="text-align: center">
+         <input type="submit" value="Réserver" class="btn btn-primary" />
+      </div>
+      </div>
+      <input type="hidden" id="project_bookingbundle_ticket__token" name="project_bookingbundle_ticket[_token]" value="yJ-rE-BiH851Nnnu83JpOzzPzW4_RzJFp3DW2i7beOU" /></form>
+   </div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer class="py-5 bg-black">
+		<div class="container">
+			<p class="m-0 text-center text-white small">Musée du Louvre © 2018</p>
+		</div>
+		<!-- /.container -->
+	</footer>
+
+			<script src="/jquery/jquery.js"></script>
+		<script src="/js/bootstrap.bundle.js"></script>
+  	</body>
+</html>
+
+Time: 527 ms, Memory: 20.00MB
+
+OK (2 tests, 2 assertions)

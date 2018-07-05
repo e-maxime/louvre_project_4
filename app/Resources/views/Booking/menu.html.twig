@@ -1,14 +1,19 @@
 <nav>
-    <nav class="navbar navbar-expand-lg navbar-light" style="background: #ffffe6; margin-top: -0.4%;">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item" style="color:white;">
-                    <a class="nav-link" href="{{ path('homepage') }}">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('booking') }}">Réserver</a>
-                </li>
-            </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('homepage') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('homepage') }}#booking_section">Réserver</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 </nav>

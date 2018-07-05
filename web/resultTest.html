@@ -1,0 +1,134 @@
+PHPUnit 5.7.27 by Sebastian Bergmann and contributors.
+
+.                                                                   1 / 1 (100%)<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>    Musée du Louvre - Réservation
+</title>
+					<link rel="stylesheet" href="/css/bootstrap.css">
+		<link rel="stylesheet" href="/css/style.css" />
+		<link rel="stylesheet" href="/css/one-page-wonder.css">
+	</head>
+
+<body>
+        <nav>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#booking_section">Réserver</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</nav>
+	    <header class="masthead text-center text-white">
+        <div class="masthead-content">
+            <div class="container">
+                <h1 class="masthead-heading mb-0">Musée du Louvre</h1>
+                <h2 class="masthead-subheading mb-0">Réservation en ligne</h2>
+            </div>
+        </div>
+    </header>
+
+	<section id="payment_section">
+    <div class="container">
+        <h1>Réserver vos billets - Paiement</h1>
+        <br/>
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th>Jour de visite</th>
+                <th>Adresse email</th>
+                <th>Durée de la visite</th>
+                <th>Nombre de visiteurs</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>28/06/2018</td>
+                <td>maxime@enrietto.fr</td>
+                <td>Journée entière</td>
+                <td>2</td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Date de naissance</th>
+                <th>Pays d'origine</th>
+                <th>Tarif réduit</th>
+                <th>Prix du billet</th>
+            </tr>
+            </thead>
+            <tbody>
+                            <tr>
+                    <td>Ki</td>
+                    <td>Nuts</td>
+                    <td>09/09/1993</td>
+                    <td>FR</td>
+                    <td>Non</td>
+                    <td>16 €</td>
+                </tr>
+                            <tr>
+                    <td>Ven</td>
+                    <td>Ator</td>
+                    <td>09/11/1991</td>
+                    <td>BR</td>
+                    <td>Oui</td>
+                    <td>10 €</td>
+                </tr>
+                        </tbody>
+        </table>
+
+            <div id="button-stripe" style="text-align: center;">
+                <form action="" method="POST">
+                    <script
+                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key="pk_test_jBIw1J9QqGPLNa9kMguLMrTG"
+                            data-amount="2600"
+                            data-name="Réservation"
+                            data-description="Musée du Louvre"
+                            data-image="/images/pay.png"
+                            data-email="maxime@enrietto.fr"
+                            data-label="Payer"
+                            data-currency="eur"
+                            data-locale="auto">
+                    </script>
+                </form>
+            </div>
+    </div>
+
+</section>
+
+
+
+	<footer class="py-5 bg-black">
+		<div class="container">
+			<p class="m-0 text-center text-white small">Musée du Louvre © 2018</p>
+		</div>
+		<!-- /.container -->
+	</footer>
+
+			<script src="/jquery/jquery.js"></script>
+		<script src="/js/bootstrap.bundle.js"></script>
+  	</body>
+</html>
+
+Time: 3.15 seconds, Memory: 30.00MB
+
+OK (1 test, 0 assertions)

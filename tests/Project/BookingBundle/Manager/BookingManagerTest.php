@@ -27,7 +27,7 @@ class BookingManagerTest extends TestCase
         $booking = $this->bookingManager->init();
 
         $this->assertInstanceOf(Booking::class, $booking);
-    }
+    }//OK
 
     protected function setUp()
     {
@@ -46,5 +46,10 @@ class BookingManagerTest extends TestCase
 
         $this->bookingManager->generateTickets($booking);
         $this->assertEquals(3, $booking->getVisitors()->count());
-    }
+
+
+        $booking->setNbTickets(2);
+        $this->bookingManager->generateTickets($booking);
+        $this->assertEquals(2, $booking->getVisitors()->count());
+    }//OK
 }

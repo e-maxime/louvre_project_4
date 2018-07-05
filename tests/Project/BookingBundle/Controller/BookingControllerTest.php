@@ -18,7 +18,7 @@ class BookingControllerTest extends WebTestCase
         $client->request('GET', '/');
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());
-    }
+    }//OK
 
     public function testHomepage()
     {
@@ -28,7 +28,7 @@ class BookingControllerTest extends WebTestCase
         $this->assertSame(1, $crawler->filter('html:contains("Réservation en ligne")')->count());
 
         echo $client->getResponse()->getContent();
-    }
+    }//OK
 
     public function testSendBooking()
     {
@@ -37,7 +37,7 @@ class BookingControllerTest extends WebTestCase
 
         $form = $crawler->selectButton('Réserver')->form();
         $form['project_bookingbundle_ticket[email]'] = 'maxime@enrietto.fr';
-        $form['project_bookingbundle_ticket[dayToVisit]'] = '2018-07-02';
+        $form['project_bookingbundle_ticket[dayToVisit]'] = '2018-07-05';
         $form['project_bookingbundle_ticket[typeOfTicket]'] = 1;
         $form['project_bookingbundle_ticket[nbTickets]'] = '2';
         $client->submit($form);
@@ -62,5 +62,5 @@ class BookingControllerTest extends WebTestCase
         $client->followRedirect();
 
         echo $client->getResponse()->getContent();
-    }
+    }//OK
 }

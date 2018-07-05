@@ -39,7 +39,7 @@ class ComputePriceTest extends TestCase
         $computePrice->getTotal($booking);
 
         $this->assertEquals($expected, $booking->getTotalPrice());
-    }
+    }//OK
 
     public function getTotalProvider()
     {

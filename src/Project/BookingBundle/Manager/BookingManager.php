@@ -74,18 +74,31 @@ class BookingManager
      */
     public function init()
     {
+        $currentSession = $this->session->get(self::SESSION_CURRENT_BOOKING);
+        if ($currentSession)
+        {
+            return $currentSession;
+        }
+
         $booking = new Booking();
         $this->session->set(self::SESSION_CURRENT_BOOKING, $booking);
         return $booking;
     }
 
     /**
+     *
      * @param Booking $booking
      */
     public function generateTickets(Booking $booking)
     {
-        for ($i = 0; $i < $booking->getNbTickets(); $i++) {
-            $booking->addVisitor(new Visitor());
+
+        while($booking->getNbTickets() != $booking->getVisitors()->count()){
+            if($booking->getNbTickets() > $booking->getVisitors()->count()){
+                $booking->addVisitor(new Visitor());
+            }
+            if($booking->getNbTickets() < $booking->getVisitors()->count()){
+                $booking->removeVisitor($booking->getVisitors()->last());
+            }
         }
     }
 

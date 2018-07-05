@@ -37,5 +37,5 @@ class MailSenderTest extends TestCase
         $mailSender = new MailSender($mailer, $twig);
 
         $this->assertTrue(true, $mailSender->sendBookingConfirmation($booking));
-    }
+    }//OK
 }

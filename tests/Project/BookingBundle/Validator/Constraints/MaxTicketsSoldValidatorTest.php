@@ -9,29 +9,37 @@
 namespace Tests\Project\BookingBundle\Validator\Constraints;
 
 use Doctrine\ORM\EntityManagerInterface;
-use PHPUnit\Framework\TestCase;
 use Project\BookingBundle\Entity\Booking;
+use Project\BookingBundle\Validator\Constraints\MaxTicketsSold;
 use Project\BookingBundle\Validator\Constraints\MaxTicketsSoldValidator;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintValidator;
 
-class MaxTicketsSoldValidatorTest extends TestCase
+class MaxTicketsSoldValidatorTest extends ValidatorTestAbstract
 {
-    public function testMaxTicketsValidateReturningOk()
+    protected function getValidatorInstance()
     {
-        $entityManagerInterface = $this
-            ->getMockBuilder(EntityManagerInterface::class)
+//        $entityManagerInterface = $this->getMockBuilder(EntityManagerInterface::class)->disableOriginalConstructor()->getMock();
+        return $this
+            ->getMockBuilder(MaxTicketsSoldValidator::class)
             ->disableOriginalConstructor()
             ->getMock();
+    }
+
+    public function testMaxTicketsValidateReturningOk()
+    {
+        $maxTicketsConstraint = new MaxTicketsSold();
+        $maxTicketsValidator = $this->initValidator();
 
         $booking = new Booking();
         $booking->setDayToVisit(new \DateTime());
+        $booking->setNbTickets();
 
-        $maxTickets = new MaxTicketsSoldValidator($entityManagerInterface);
+        $constraint = $this
+            ->getMockBuilder(Constraint::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $valueCounted = $maxTickets->validate($booking, Constraint::class);
-
-        $this->assertAttributeLessThanOrEqual(MaxTicketsSoldValidator::MAX_TICKETS_SOLD, $valueCounted);
-
-
+        $maxTicketsValidator->validate($booking, $constraint);
     }
 }

@@ -47,11 +47,9 @@ class Payment
         try{
             Stripe::setApiKey($this->stripeSecretKey);
             $charge = Charge::create(array("amount" => $booking->getTotalPrice() * 100, "currency" => "eur", "source" => $request->get('stripeToken'), "description" => "Commande Louvre"));
-            $orderId = $charge->id;
-            $booking->setOrderId($orderId);
         }catch(Card $e){
             return false;
         }
-        return true;
+        return $charge->id;
     }
 }

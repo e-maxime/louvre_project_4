@@ -49,7 +49,7 @@ class BookingController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/informations_visiteurs", name="visitor")
      */
-    public function visitorAction(Request $request, BookingManager $bookingManager, ComputePrice $computePrice)
+    public function visitorAction(Request $request, BookingManager $bookingManager)
     {
         /** @var Booking $booking */
         $booking = $bookingManager->getCurrentBooking(BookingManager::NEED_DATA_BOOKING);
@@ -60,7 +60,7 @@ class BookingController extends Controller
 
         if ($visitorForm->isSubmitted() && $visitorForm->isValid()) {
 
-            $computePrice->getTotal($booking);
+            $bookingManager->computePrice($booking);
 
             return $this->redirectToRoute('payment');
         }

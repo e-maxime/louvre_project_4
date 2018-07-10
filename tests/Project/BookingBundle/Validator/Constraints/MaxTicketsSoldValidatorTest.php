@@ -8,22 +8,43 @@
 
 namespace Tests\Project\BookingBundle\Validator\Constraints;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
+
 use Project\BookingBundle\Entity\Booking;
+use Project\BookingBundle\Repository\BookingRepository;
 use Project\BookingBundle\Validator\Constraints\MaxTicketsSold;
 use Project\BookingBundle\Validator\Constraints\MaxTicketsSoldValidator;
-use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\ConstraintValidator;
+
 
 class MaxTicketsSoldValidatorTest extends ValidatorTestAbstract
 {
     protected function getValidatorInstance()
     {
-//        $entityManagerInterface = $this->getMockBuilder(EntityManagerInterface::class)->disableOriginalConstructor()->getMock();
-        return $this
-            ->getMockBuilder(MaxTicketsSoldValidator::class)
+
+
+        $repository = $this
+            ->getMockBuilder(BookingRepository::class)
             ->disableOriginalConstructor()
+            ->setMethods(['findTotalTicketsByDayToVisit'])
             ->getMock();
+
+        $repository->expects($this->once())
+            ->method('findTotalTicketsByDayToVisit')
+            ->will($this->returnValue(MaxTicketsSoldValidator::MAX_TICKETS_SOLD - 2));
+
+
+        $entityManagerInterface = $this
+            ->getMockBuilder(EntityManager::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getRepository'])
+            ->getMock();
+
+        $entityManagerInterface->expects($this->once())
+            ->method('getRepository')
+            ->with(Booking::class)
+            ->will($this->returnValue($repository));
+
+        return new MaxTicketsSoldValidator($entityManagerInterface);
     }
 
     public function testMaxTicketsValidateReturningOk()
@@ -33,13 +54,22 @@ class MaxTicketsSoldValidatorTest extends ValidatorTestAbstract
 
         $booking = new Booking();
         $booking->setDayToVisit(new \DateTime());
-        $booking->setNbTickets();
+        $booking->setNbTickets(2);
 
-        $constraint = $this
-            ->getMockBuilder(Constraint::class)
-            ->disableOriginalConstructor()
-            ->getMock();
 
-        $maxTicketsValidator->validate($booking, $constraint);
+        $maxTicketsValidator->validate($booking, $maxTicketsConstraint);
+    }
+
+    public function testMaxTicketsValidateReturningNotOk()
+    {
+        $maxTicketsConstraint = new MaxTicketsSold();
+        $maxTicketsValidator = $this->initValidator($maxTicketsConstraint->message);
+
+        $booking = new Booking();
+        $booking->setDayToVisit(new \DateTime());
+        $booking->setNbTickets(3);
+
+
+        $maxTicketsValidator->validate($booking, $maxTicketsConstraint);
     }
 }

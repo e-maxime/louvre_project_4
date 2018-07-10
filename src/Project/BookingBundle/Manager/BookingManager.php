@@ -11,6 +11,7 @@ namespace Project\BookingBundle\Manager;
 use Doctrine\ORM\EntityManagerInterface;
 use Project\BookingBundle\Entity\Booking;
 use Project\BookingBundle\Entity\Visitor;
+use Project\BookingBundle\Service\ComputePrice;
 use Project\BookingBundle\Service\MailSender;
 use Project\BookingBundle\Service\Payment;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +52,6 @@ class BookingManager
      */
     private $validator;
 
-
     /**
      * BookingManager constructor.
      * @param SessionInterface $session
@@ -59,6 +59,7 @@ class BookingManager
      * @param Payment $payment
      * @param MailSender $mailSender
      * @param ValidatorInterface $validator
+     * @param ComputePrice $computePrice
      */
     public function __construct(SessionInterface $session, EntityManagerInterface $entityManager, Payment $payment, MailSender $mailSender, ValidatorInterface $validator)
     {
@@ -86,12 +87,46 @@ class BookingManager
     }
 
     /**
+     * @param Booking $booking
+     */
+    public function computePrice(Booking $booking)
+    {
+        $priceTotal = 0;
+        foreach ($booking->getVisitors() as $visitor) {
+            $age = $visitor->getAge();
+            if ($age < BookingManager::AGE_KIDS) {
+                $price = Booking::PRICE_FREE;
+            } else if ($age < BookingManager::AGE_TEENAGER) {
+                $price = Booking::PRICE_CHILD;
+            } else if ($age < BookingManager::AGE_SENIOR) {
+                $price = Booking::PRICE_NORMAL;
+            } else {
+                $price = Booking::PRICE_OLD;
+            }
+
+            if($visitor->getReducePrice()  && $price > Booking::PRICE_REDUCED){
+                $price = Booking::PRICE_REDUCED;
+            }else{
+                $visitor->setReducePrice(false);
+            }
+
+            if($booking->getTypeOfTicket() == Booking::TYPE_HALF_DAY){
+                $price = $price * Booking::PRICE_HALF_DAY_MULTIPLICATOR;
+            }
+
+            $visitor->setPrice($price);
+            $priceTotal += $visitor->getPrice();
+        }
+        $booking->setTotalPrice($priceTotal);
+    }
+
+    /**
+     *
      *
      * @param Booking $booking
      */
     public function generateTickets(Booking $booking)
     {
-
         while($booking->getNbTickets() != $booking->getVisitors()->count()){
             if($booking->getNbTickets() > $booking->getVisitors()->count()){
                 $booking->addVisitor(new Visitor());
@@ -158,6 +193,7 @@ class BookingManager
         $transactionId = $this->payment->isPayment($request, $booking);
 
         if($transactionId !== false){
+            $booking->setOrderId($transactionId);
             $this->entityManager->persist($this->getCurrentBooking());
             $this->entityManager->flush();
 

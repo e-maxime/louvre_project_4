@@ -27,6 +27,8 @@ class Booking
     const PRICE_HALF_DAY_MULTIPLICATOR = 0.5;
     const TYPE_HALF_DAY = false;
     const TYPE_FULL_DAY = true;
+    const REDUCED_PRICE_CHECKED = true;
+    const REDUCED_PRICE_NOT_CHECKED = false;
 
     /**
      * @var int
@@ -68,7 +70,7 @@ class Booking
      *
      * @ORM\Column(name="nbTickets", type="integer")
      * @Assert\NotBlank(groups={"booking_group_validation"})
-     * @Assert\GreaterThan(0, message="Vous devez réserver au moins 1 billet.", groups={"booking_group_validation"})
+     * @Assert\Range(min = 1, max = 10, minMessage = "Vous devez réserver au moins 1 billet.", maxMessage = "Vous ne pouvez pas réserver plus de 10 billets à la fois. Si besoin merci de nous contacter au 01.22.33.44.55.", groups={"booking_group_validation"})
      */
     private $nbTickets;
 

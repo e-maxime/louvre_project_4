@@ -30,8 +30,8 @@ class MaxTicketsSoldValidator extends ConstraintValidator
 
         $nbCurrentTickets = $nbTickets + $booking->getNbTickets();
 
-        if ($nbCurrentTickets >= self::MAX_TICKETS_SOLD) {
-            $this->context->addViolation($constraint->message);
+        if ($nbCurrentTickets > self::MAX_TICKETS_SOLD) {
+            $this->context->buildViolation($constraint->message)->addViolation();
         }
     }
 }

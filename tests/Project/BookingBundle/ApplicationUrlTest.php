@@ -26,8 +26,6 @@ class ApplicationUrlTest extends WebTestCase
      */
     public function testPageIsSuccessful($url, $booking ,$status)
     {
-
-
         $client = self::createClient();
         if($booking){
             $client->getContainer()->get('session')->set(BookingManager::SESSION_CURRENT_BOOKING, $booking);
@@ -37,7 +35,7 @@ class ApplicationUrlTest extends WebTestCase
 
 
         $this->assertEquals($status, $client->getResponse()->getStatusCode());
-    }//OK
+    }
 
 
 
@@ -54,14 +52,14 @@ class ApplicationUrlTest extends WebTestCase
 
         $booking = new Booking();
         $booking->setEmail('prenom.nom@domaine.com');
-        $booking->setDayToVisit(new \DateTime());
+        $booking->setDayToVisit(new \DateTime('2018-07-11'));
         $booking->setTypeOfTicket(true);
         $booking->setNbTickets(1);
         $booking->addVisitor($visitorEmpty);
 
         $bookingSecondStep = new Booking();
         $bookingSecondStep->setEmail('prenom.nom@domaine.com');
-        $bookingSecondStep->setDayToVisit(new \DateTime());
+        $bookingSecondStep->setDayToVisit(new \DateTime('2018-07-11'));
         $bookingSecondStep->setTypeOfTicket(true);
         $bookingSecondStep->setNbTickets(1);
         $bookingSecondStep->addVisitor($visitorNotEmpty);

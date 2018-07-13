@@ -12,13 +12,5 @@ use Doctrine\ORM\EntityRepository;
  */
 class VisitorRepository extends EntityRepository
 {
-    public function findBirthday($birthday)
-    {
-        $queryBuilder = $this->createQueryBuilder('v');
 
-        $queryBuilder->where('v.birthday = :birthday')
-            ->setParameter('birthday', $birthday);
-
-        return $queryBuilder->getQuery()->getResult();
-    }
 }

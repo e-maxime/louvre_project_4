@@ -38,7 +38,7 @@ class BookingControllerTest extends WebTestCase
 
         $form = $crawler->selectButton('Réserver')->form();
         $form['project_bookingbundle_ticket[email]'] = 'maxime@enrietto.fr';
-        $form['project_bookingbundle_ticket[dayToVisit]'] = '2018-07-11';
+        $form['project_bookingbundle_ticket[dayToVisit]'] = '2018-07-19';
         $form['project_bookingbundle_ticket[typeOfTicket]'] = 1;
         $form['project_bookingbundle_ticket[nbTickets]'] = '2';
         $client->submit($form);

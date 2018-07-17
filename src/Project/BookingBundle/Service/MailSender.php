@@ -9,6 +9,7 @@
 namespace Project\BookingBundle\Service;
 
 use Project\BookingBundle\Entity\Booking;
+use Swift_Image;
 
 
 /**
@@ -47,10 +48,13 @@ class MailSender
      */
     public function sendBookingConfirmation(Booking $booking)
     {
-        $message = (new \Swift_Message('Votre réservation pour le musée du Louvre'))
+        $message = new \Swift_Message();
+
+        $imgPath = $message->embed(Swift_Image::fromPath('images/logo_louvre.jpg'));
+        $message->setSubject('Votre réservation pour le musée du Louvre')
             ->setFrom('reservation@museedulouvre.fr')
             ->setTo($booking->getEmail())
-            ->setBody($this->twig->render('Booking/ticket.html.twig', array('booking' => $booking)), 'text/html');
+            ->setBody($this->twig->render('Booking/ticket.html.twig', array('booking' => $booking, 'imgPath' => $imgPath)), 'text/html');
 
         return $this->mailer->send($message);
     }

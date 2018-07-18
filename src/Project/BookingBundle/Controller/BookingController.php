@@ -7,6 +7,7 @@ use Project\BookingBundle\Form\BookingType;
 use Project\BookingBundle\Form\BookingVisitorsType;
 use Project\BookingBundle\Manager\BookingManager;
 use Project\BookingBundle\Service\ComputePrice;
+use Project\BookingBundle\Service\PriceCalculator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,11 +46,11 @@ class BookingController extends Controller
     /**
      * @param Request $request
      * @param BookingManager $bookingManager
-     * @param ComputePrice $computePrice
+     * @param PriceCalculator $priceCalculator
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/informations_visiteurs", name="visitor")
      */
-    public function visitorAction(Request $request, BookingManager $bookingManager)
+    public function visitorAction(Request $request, BookingManager $bookingManager, PriceCalculator $priceCalculator)
     {
         /** @var Booking $booking */
         $booking = $bookingManager->getCurrentBooking(BookingManager::NEED_DATA_BOOKING);
@@ -60,7 +61,7 @@ class BookingController extends Controller
 
         if ($visitorForm->isSubmitted() && $visitorForm->isValid()) {
 
-            $bookingManager->computePrice($booking);
+            $priceCalculator->getTotal();
 
             return $this->redirectToRoute('payment');
         }

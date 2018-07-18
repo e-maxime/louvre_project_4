@@ -14,6 +14,7 @@ use Project\BookingBundle\Entity\Visitor;
 use Project\BookingBundle\Service\ComputePrice;
 use Project\BookingBundle\Service\MailSender;
 use Project\BookingBundle\Service\Payment;
+use Project\BookingBundle\Service\PriceCalculator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -22,9 +23,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class BookingManager
 {
     const SESSION_CURRENT_BOOKING = "bookingData";
-    const AGE_SENIOR = 60;
-    const AGE_TEENAGER = 12;
-    const AGE_KIDS = 4;
     const NEED_DATA_BOOKING = 2;
     const NEED_DATA_TICKETS = 3;
     const NEED_ID_ORDER = 4;
@@ -59,7 +57,6 @@ class BookingManager
      * @param Payment $payment
      * @param MailSender $mailSender
      * @param ValidatorInterface $validator
-     * @param ComputePrice $computePrice
      */
     public function __construct(SessionInterface $session, EntityManagerInterface $entityManager, Payment $payment, MailSender $mailSender, ValidatorInterface $validator)
     {
@@ -84,40 +81,6 @@ class BookingManager
         $booking = new Booking();
         $this->session->set(self::SESSION_CURRENT_BOOKING, $booking);
         return $booking;
-    }
-
-    /**
-     * @param Booking $booking
-     */
-    public function computePrice(Booking $booking)
-    {
-        $priceTotal = 0;
-        foreach ($booking->getVisitors() as $visitor) {
-            $age = $visitor->getAge();
-            if ($age < BookingManager::AGE_KIDS) {
-                $price = Booking::PRICE_FREE;
-            } else if ($age < BookingManager::AGE_TEENAGER) {
-                $price = Booking::PRICE_CHILD;
-            } else if ($age < BookingManager::AGE_SENIOR) {
-                $price = Booking::PRICE_NORMAL;
-            } else {
-                $price = Booking::PRICE_OLD;
-            }
-
-            if($visitor->getReducePrice()  && $price > Booking::PRICE_REDUCED){
-                $price = Booking::PRICE_REDUCED;
-            }else{
-                $visitor->setReducePrice(false);
-            }
-
-            if($booking->getTypeOfTicket() == Booking::TYPE_HALF_DAY){
-                $price = $price * Booking::PRICE_HALF_DAY_MULTIPLICATOR;
-            }
-
-            $visitor->setPrice($price);
-            $priceTotal += $visitor->getPrice();
-        }
-        $booking->setTotalPrice($priceTotal);
     }
 
     /**

@@ -33,3 +33,11 @@ services:
     Project\BookingBundle\Service\Payment:
         arguments:
             $stripeSecretKey: '%stripe_secret_key%'
+
+    Project\BookingBundle\Service\PriceCalculator:
+        arguments:
+            $price_free: '%price_free%'
+            $price_child: '%price_child%'
+            $price_normal: '%price_normal%'
+            $price_old: '%price_old%'
+            $price_reduced: '%price_reduced%'

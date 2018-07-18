@@ -18,7 +18,7 @@ class BookingControllerTest extends WebTestCase
         $client->request('GET', '/');
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());
-    }//OK
+    }
 
     public function testHomepage()
     {
@@ -27,9 +27,9 @@ class BookingControllerTest extends WebTestCase
 
         $this->assertSame(1, $crawler->filter('html:contains("Réservation en ligne")')->count());
 
-//        echo $client->getResponse()-
+
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-    }//OK
+    }
 
     public function testSendBooking()
     {
@@ -63,6 +63,5 @@ class BookingControllerTest extends WebTestCase
         $client->followRedirect();
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-//        echo $client->getResponse()->getContent();
-    }//OK
+    }
 }

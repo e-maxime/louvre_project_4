@@ -52,14 +52,14 @@ class ApplicationUrlTest extends WebTestCase
 
         $booking = new Booking();
         $booking->setEmail('prenom.nom@domaine.com');
-        $booking->setDayToVisit(new \DateTime('2018-07-11'));
+        $booking->setDayToVisit(new \DateTime('2018-07-25'));
         $booking->setTypeOfTicket(true);
         $booking->setNbTickets(1);
         $booking->addVisitor($visitorEmpty);
 
         $bookingSecondStep = new Booking();
         $bookingSecondStep->setEmail('prenom.nom@domaine.com');
-        $bookingSecondStep->setDayToVisit(new \DateTime('2018-07-11'));
+        $bookingSecondStep->setDayToVisit(new \DateTime('2018-07-25'));
         $bookingSecondStep->setTypeOfTicket(true);
         $bookingSecondStep->setNbTickets(1);
         $bookingSecondStep->addVisitor($visitorNotEmpty);

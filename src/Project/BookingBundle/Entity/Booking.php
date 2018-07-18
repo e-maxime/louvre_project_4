@@ -19,11 +19,6 @@ use Symfony\Component\Validator\GroupSequenceProviderInterface;
  */
 class Booking
 {
-    const PRICE_FREE = 0;
-    const PRICE_CHILD = 8;
-    const PRICE_NORMAL = 16;
-    const PRICE_OLD = 12;
-    const PRICE_REDUCED = 10;
     const PRICE_HALF_DAY_MULTIPLICATOR = 0.5;
     const TYPE_HALF_DAY = false;
     const TYPE_FULL_DAY = true;
